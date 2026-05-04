@@ -1,5 +1,5 @@
 # HCharlie.github.io
 
-GitHub Pages user site. Enable **Settings → Pages → Deploy from branch `main` / (root)** if it is not on yet.
+Personal site — work in progress.
 
-Site: https://hcharlie.github.io
+**Live site:** https://hcharlie.github.io

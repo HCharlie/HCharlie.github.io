@@ -53,22 +53,34 @@
       text-decoration: none;
     }
     a:hover { text-decoration: underline; }
-    code {
-      font-size: 0.9em;
-      padding: 0.15em 0.4em;
-      border-radius: 4px;
-      background: color-mix(in srgb, var(--fg) 8%, transparent);
+    p + p {
+      margin-top: 1rem;
+    }
+    .badge {
+      display: inline-block;
+      margin-top: 1.25rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent);
+      border-radius: 999px;
     }
   </style>
 </head>
 <body>
   <main>
-    <h1>HCharlie</h1>
-    <p>Personal site on GitHub Pages. Edit <code>index.html</code> and push to update.</p>
-    <p style="margin-top: 1.25rem;">
-      <a href="https://github.com/HCharlie">GitHub profile</a>
-      ·
-      <a href="https://github.com/HCharlie/HCharlie.github.io">This repo</a>
+    <h1>Hello, I’m Charlie</h1>
+    <p>
+      Welcome to my little corner of the web. I’m glad you stopped by.
+      I’m slowly putting this place together—more stories, projects, and updates will land here when they’re ready.
+    </p>
+    <p>
+      For now, think of it as a friendly “hello” from behind the scaffolding.
+    </p>
+    <p class="badge" role="status">Site under construction</p>
+    <p style="margin-top: 1.5rem;">
+      <a href="https://github.com/HCharlie">Find me on GitHub</a>
     </p>
   </main>
 </body>
