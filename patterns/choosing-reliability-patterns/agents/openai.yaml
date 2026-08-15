@@ -1,0 +1,4 @@
+interface:
+  display_name: "Choosing Reliability Patterns"
+  short_description: "Choose patterns for software reliability"
+  default_prompt: "Use $choosing-reliability-patterns to recommend the smallest useful reliability pattern set for this system."
