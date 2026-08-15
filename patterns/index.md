@@ -1,0 +1,18 @@
+---
+layout: pattern
+title: Commonly Used Patterns
+eyebrow: A field guide for working software engineers
+permalink: /patterns/
+---
+
+Software patterns are compressed experience: names for recurring problems, their usual responses, and the trade-offs that follow.
+
+This series keeps them brief. Each entry is a practical refresher for engineers who need to recognize a pattern, understand when it helps, and remember what it can cost.
+
+## Published
+
+- [Reliability Patterns](/patterns/reliability/) — containing dependency failures, controlling overload, preserving work, and recovering safely.
+
+## Coming gradually
+
+Rollout, deployment, release, and other patterns that show up repeatedly in real systems.
