@@ -59,7 +59,7 @@ Separates messages that exceed their retry allowance so normal processing can co
 
 ### Transactional Outbox and Inbox
 
-Records outgoing events with business changes and records consumed identities before applying effects. It avoids distributed transactions at the cost of extra storage, cleanup, and delivery machinery.
+Records outgoing events atomically with business changes and records consumed identities atomically with their effects. It avoids distributed transactions at the cost of extra storage, cleanup, and delivery machinery.
 
 ## Availability and Recovery
 

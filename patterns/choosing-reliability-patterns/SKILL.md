@@ -14,4 +14,4 @@ Read `index.md` completely before making recommendations.
 
 Return four short sections: **Failure**, **Patterns**, **Interactions**, and **Costs and risks**.
 
-Stay conceptual unless the user asks for implementation details. Never recommend the full catalogue by default.
+For conceptual requests, keep each recommendation at the pattern level: name the failure it controls and its key caution. Include implementation details only when the user explicitly requests them. Never recommend the full catalogue by default.
