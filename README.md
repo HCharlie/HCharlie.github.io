@@ -6,17 +6,23 @@ Personal site — work in progress.
 
 ## View locally
 
-Install the site dependencies once:
+Node.js 18 or later is required. Install the site dependencies once:
 
 ```bash
-gem install jekyll -v 3.10.0
-gem install kramdown-parser-gfm
+npm install
 ```
 
 From the repository root, run:
 
 ```bash
-jekyll serve --livereload
+npm run dev
 ```
 
-Open http://localhost:4000 in your browser.
+Open http://localhost:8080 in your browser.
+
+To build and verify the site:
+
+```bash
+npm test
+npm run build
+```
