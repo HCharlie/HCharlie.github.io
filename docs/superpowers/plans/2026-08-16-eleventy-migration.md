@@ -62,11 +62,11 @@ git commit -m "Test generated site contract"
 
 **Interfaces:**
 - Consumes: Existing HTML, Markdown, Liquid-like layout, front matter, and the adjacent reliability skill.
-- Produces: `npm run dev`, `npm run build`, `npm run clean`, and a generated `_site/` matching Task 1's contract.
+- Produces: `npm run dev`, `npm run build`, and a generated `_site/` matching Task 1's contract.
 
 - [ ] **Step 1: Add the minimal Node package definition**
 
-Define a private ESM package with Eleventy 3.1.6, Node `>=18`, and scripts for `dev`, `build`, `clean`, and `test` (`build` followed by `node --test`). Run `npm install` to generate the lockfile.
+Define a private ESM package with Eleventy 3.1.6, Node `>=18`, and scripts for `dev`, `build`, and `test` (`build` followed by `node --test`). Run `npm install` to generate the lockfile.
 
 - [ ] **Step 2: Add Eleventy configuration**
 
