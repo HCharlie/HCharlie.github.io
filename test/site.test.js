@@ -22,8 +22,8 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.match(roadmap, /This is a living map of what I’m building for this site/);
 
   const mermaidUrl = "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
-  assert.doesNotMatch(`${home}${patterns}${reliability}`, new RegExp(mermaidUrl));
-  assert.match(roadmap, new RegExp(mermaidUrl));
+  assert.equal(`${home}${patterns}${reliability}`.includes(mermaidUrl), false);
+  assert.equal(roadmap.includes(mermaidUrl), true);
 
   await assert.rejects(access(site("patterns/choosing-reliability-patterns/SKILL/index.html")));
 });
