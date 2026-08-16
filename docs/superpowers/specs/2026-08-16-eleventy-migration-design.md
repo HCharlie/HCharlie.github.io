@@ -19,7 +19,6 @@ The project uses Eleventy 3.1.6 with Node.js 18 or newer. Liquid remains the lay
 - `npm run dev` serves the site with file watching.
 - `npm run build` generates `_site/`.
 - `npm test` builds and runs smoke tests against generated HTML.
-- `npm run clean` removes generated output through Eleventy's built-in clean option.
 
 No frontend framework, asset pipeline, or Eleventy plugin is introduced.
 
