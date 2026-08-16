@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page.title }} · HCharlie</title>
+  <title>{{ title }} · HCharlie</title>
   <style>
     :root { color-scheme: light dark; --bg: #0f1419; --fg: #e7ecf3; --muted: #8b98a5; --accent: #1d9bf0; }
     @media (prefers-color-scheme: light) { :root { --bg: #f7f9fc; --fg: #0f1419; --muted: #536471; --accent: #1a8cd8; } }
@@ -24,11 +24,11 @@
 <body>
   <main>
     <a class="back-link" href="/">← HCharlie</a>
-    {% if page.eyebrow %}<p class="eyebrow">{{ page.eyebrow }}</p>{% endif %}
-    <h1>{{ page.title }}</h1>
+    {% if eyebrow %}<p class="eyebrow">{{ eyebrow }}</p>{% endif %}
+    <h1>{{ title }}</h1>
     {{ content }}
   </main>
-  {% if page.mermaid %}
+  {% if mermaid %}
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
     mermaid.initialize({

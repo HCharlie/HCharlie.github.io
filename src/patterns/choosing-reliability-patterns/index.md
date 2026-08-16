@@ -1,5 +1,5 @@
 ---
-layout: pattern
+layout: pattern.liquid
 title: Reliability Patterns
 eyebrow: Commonly Used Patterns
 permalink: /patterns/reliability/

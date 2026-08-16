@@ -1,5 +1,5 @@
 ---
-layout: pattern
+layout: pattern.liquid
 title: Commonly Used Patterns
 eyebrow: A field guide for working software engineers
 permalink: /patterns/
