@@ -14,7 +14,7 @@ The reliability article and its agent skill remain adjacent under `src/patterns/
 
 The project uses Eleventy 3.1.6 with Node.js 18 or newer. Liquid remains the layout language. A small `eleventy.config.js` defines the `src/` input, `_site/` output, layouts directory, and ignored skill files.
 
-`package.json` exposes four commands:
+`package.json` exposes three commands:
 
 - `npm run dev` serves the site with file watching.
 - `npm run build` generates `_site/`.
