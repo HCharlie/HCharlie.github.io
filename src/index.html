@@ -65,14 +65,39 @@
     }
     .nav a { padding: 0.25rem 0; }
     .hero {
-      display: grid;
-      gap: 1.25rem;
       padding: clamp(1.5rem, 5vw, 3rem);
       border: 1px solid var(--border);
       border-radius: 28px;
       background: color-mix(in srgb, var(--panel) 94%, transparent);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .hero-copy { min-width: 0; }
+    .hero-copy .lede + .lede { margin-top: 1rem; }
+    .hero-photo {
+      margin: 0;
+      align-self: stretch;
+    }
+    .hero-photo-frame {
+      width: 100%;
+      aspect-ratio: 1 / 1.08;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      background: color-mix(in srgb, var(--panel) 90%, transparent);
+    }
+    .hero-photo-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 58% 34%;
     }
     .eyebrow {
       margin: 0;
@@ -162,6 +187,8 @@
     .lede a { color: var(--accent); font-weight: 600; }
     @media (max-width: 780px) {
       .topbar { align-items: flex-start; flex-direction: column; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-photo { order: -1; max-width: 320px; }
       h1 { max-width: 100%; }
     }
   </style>
@@ -178,14 +205,23 @@
 
     <main>
       <section class="hero" aria-labelledby="home-title">
-        <p class="eyebrow">Homepage</p>
-        <h1 id="home-title">Hello, I’m Changli.</h1>
-        <p class="lede">Just a human trying to steal AI’s job.</p>
-        <p class="lede">
-          Welcome to my little corner of the web. I’m glad you stopped by.
-          I’m slowly putting this place together—more stories, projects, and updates will land here when they’re ready.
-        </p>
-        <p class="lede">For now, think of it as a friendly “hello” from behind the scaffolding.</p>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Homepage</p>
+            <h1 id="home-title">Hello, I’m Changli.</h1>
+            <p class="lede">Just a human trying to steal AI’s job.</p>
+            <p class="lede">
+              Welcome to my little corner of the web. I’m glad you stopped by.
+              I’m slowly putting this place together—more stories, projects, and updates will land here when they’re ready.
+            </p>
+            <p class="lede">For now, think of it as a friendly “hello” from behind the scaffolding.</p>
+          </div>
+          <figure class="hero-photo">
+            <div class="hero-photo-frame">
+              <img src="/assets/changli.jpg" alt="Changli sitting outdoors" width="3968" height="2976">
+            </div>
+          </figure>
+        </div>
       </section>
 
       <section class="section" aria-labelledby="series-title">

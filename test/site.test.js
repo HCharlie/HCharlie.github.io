@@ -5,16 +5,19 @@ import test from "node:test";
 const site = (path) => new URL(`../_site/${path}`, import.meta.url);
 
 test("generated site preserves routes, content, links, Mermaid, and exclusions", async () => {
-  const [home, patterns, reliability, roadmap] = await Promise.all([
+  const [home, patterns, reliability, roadmap, asset] = await Promise.all([
     readFile(site("index.html"), "utf8"),
     readFile(site("patterns/index.html"), "utf8"),
     readFile(site("patterns/reliability/index.html"), "utf8"),
     readFile(site("roadmap/index.html"), "utf8"),
+    readFile(site("assets/changli.jpg")),
   ]);
 
+  assert.ok(asset.length > 0);
   assert.match(home, /Hello, I’m Changli/);
   assert.match(home, /href="\/patterns\/"/);
   assert.match(home, /href="\/roadmap\/"/);
+  assert.match(home, /src="\/assets\/changli\.jpg"/);
   assert.match(patterns, /Software patterns are compressed experience/);
   assert.match(patterns, /href="\/patterns\/reliability\/"/);
   assert.match(reliability, /Reliability patterns help systems contain failures/);

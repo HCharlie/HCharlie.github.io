@@ -1,5 +1,6 @@
 export default function (eleventyConfig) {
   eleventyConfig.ignores.add("**/SKILL.md");
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
   return {
     dir: {
