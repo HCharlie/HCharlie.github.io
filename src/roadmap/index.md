@@ -13,6 +13,7 @@ flowchart TD
     Site["Personal Website"]
     Patterns["Commonly Used Patterns"]
     Lifecycle["SDLC &amp; ML Project Lifecycle"]
+    Tools["Dev Tools"]
     Reliability["Reliability Patterns (Published)"]
     FeatureFlags["Feature Flags (WIP)"]
     SDLC["SDLC Overview (Planned)"]
@@ -23,10 +24,12 @@ flowchart TD
 
     Site --> Patterns
     Site --> Lifecycle
+    Site --> Tools
     Patterns --> Reliability
     Patterns --> FeatureFlags
     Lifecycle --> SDLC
     Lifecycle --> ML
+    Tools --> DevTools["Dev Tools (Planned)"]
     ML --> FeatureEngineering
     ML --> Training
     ML --> Serving
