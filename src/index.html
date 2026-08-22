@@ -8,89 +8,222 @@
     :root {
       color-scheme: light dark;
       --bg: #0f1419;
+      --panel: color-mix(in srgb, var(--bg) 82%, white 18%);
       --fg: #e7ecf3;
-      --muted: #8b98a5;
-      --accent: #1d9bf0;
+      --muted: #94a3b8;
+      --accent: #5ab0ff;
+      --border: color-mix(in srgb, var(--fg) 14%, transparent);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
     }
     @media (prefers-color-scheme: light) {
       :root {
-        --bg: #f7f9fc;
-        --fg: #0f1419;
-        --muted: #536471;
-        --accent: #1a8cd8;
+        --bg: #f6f8fc;
+        --panel: #ffffff;
+        --fg: #0f172a;
+        --muted: #5b6475;
+        --accent: #0f7ae5;
+        --border: rgba(15, 23, 42, 0.12);
+        --shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
       }
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       min-height: 100vh;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 18%, transparent), transparent 35%),
+        linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 88%, black 12%));
       color: var(--fg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
       line-height: 1.6;
     }
-    main {
-      max-width: 32rem;
-      text-align: center;
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent); }
+    .page {
+      width: min(1100px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 1rem 0 3rem;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0 1.5rem;
+    }
+    .brand {
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .nav a { padding: 0.25rem 0; }
+    .hero {
+      display: grid;
+      gap: 1.25rem;
+      padding: clamp(1.5rem, 5vw, 3rem);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: color-mix(in srgb, var(--panel) 94%, transparent);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .eyebrow {
+      margin: 0;
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
     h1 {
-      font-size: clamp(1.75rem, 4vw, 2.25rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin: 0 0 0.75rem;
+      margin: 0;
+      font-size: clamp(2.5rem, 7vw, 4.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      max-width: 10ch;
     }
-    p {
+    .lede {
+      margin: 0;
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
+    }
+    .section {
+      margin-top: 2rem;
+    }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .section h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .section p { margin: 0; color: var(--muted); }
+    .stack {
+      display: grid;
+      gap: 0.9rem;
+    }
+    .row,
+    .row-muted {
+      display: block;
+      padding: 1.1rem 1.15rem;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: color-mix(in srgb, var(--panel) 94%, transparent);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+    .row:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+    }
+    .row h3,
+    .row-muted h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.15rem;
+    }
+    .row p,
+    .row-muted p {
       margin: 0;
       color: var(--muted);
-      font-size: 1.05rem;
     }
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    a:hover { text-decoration: underline; }
-    p + p {
-      margin-top: 1rem;
-    }
-    .badge {
+    .meta {
       display: inline-block;
-      margin-top: 1.25rem;
-      padding: 0.35rem 0.75rem;
-      font-size: 0.85rem;
-      font-weight: 500;
+      margin-top: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .row-muted {
+      background: transparent;
+      border-style: dashed;
+      box-shadow: none;
       color: var(--muted);
-      border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent);
-      border-radius: 999px;
+    }
+    .footer {
+      margin-top: 2rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .footer a { color: var(--fg); }
+    .lede a { color: var(--accent); font-weight: 600; }
+    @media (max-width: 780px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      h1 { max-width: 100%; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Hello, I’m Changli</h1>
-    <p>Just a human trying to steal AI’s job.</p>
-    <p>
-      Welcome to my little corner of the web. I’m glad you stopped by.
-      I’m slowly putting this place together—more stories, projects, and updates will land here when they’re ready.
-    </p>
-    <p>
-      For now, think of it as a friendly “hello” from behind the scaffolding.
-    </p>
-    <p class="badge" role="status">Site under construction</p>
-    <p style="margin-top: 1.5rem;">
-      <a href="/patterns/">Commonly Used Patterns</a><br>
-      Short field notes for working software engineers.
-    </p>
-    <p style="margin-top: 1.5rem;">
-      <a href="/roadmap/">Website Roadmap</a><br>
-      What I’m building next.
-    </p>
-    <p style="margin-top: 1.5rem;">
-      <a href="https://github.com/HCharlie">Find me on GitHub</a>
-    </p>
-  </main>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="/">HCharlie</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/patterns/">Series</a>
+        <a href="https://github.com/HCharlie">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="home-title">
+        <p class="eyebrow">Homepage</p>
+        <h1 id="home-title">Hello, I’m Changli.</h1>
+        <p class="lede">Just a human trying to steal AI’s job.</p>
+        <p class="lede">
+          Welcome to my little corner of the web. I’m glad you stopped by.
+          I’m slowly putting this place together—more stories, projects, and updates will land here when they’re ready.
+        </p>
+        <p class="lede">For now, think of it as a friendly “hello” from behind the scaffolding.</p>
+      </section>
+
+      <section class="section" aria-labelledby="series-title">
+        <div class="section-head">
+          <h2 id="series-title">Series</h2>
+          <p>What to read first</p>
+        </div>
+        <div class="stack">
+          <a class="row" href="/patterns/">
+            <h3>Commonly Used Patterns</h3>
+            <p>Short field notes on recurring engineering problems and the trade-offs behind them.</p>
+            <span class="meta">Published series</span>
+          </a>
+          <div class="row-muted" aria-label="Coming soon">
+            <h3>ML Series</h3>
+            <p>Coming soon: ML-related topics, added one topic at a time as the site expands.</p>
+            <span class="meta">Planned</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="about-title">
+        <div class="section-head">
+          <h2 id="about-title">About this site</h2>
+          <p>Simple navigation for visitors and future updates</p>
+        </div>
+        <p class="lede" style="font-size: 1rem; max-width: 70ch;">
+          If you want the current best starting point, open the series above.
+          If you want the direction of the site, check the
+          <a href="/roadmap/" style="text-decoration: underline; text-underline-offset: 0.16em;">roadmap →</a>.
+          If you want the source of truth for the code itself, it lives on GitHub.
+        </p>
+      </section>
+
+      <p class="footer">
+        <a href="https://github.com/HCharlie">GitHub</a>
+      </p>
+    </main>
+  </div>
 </body>
 </html>
