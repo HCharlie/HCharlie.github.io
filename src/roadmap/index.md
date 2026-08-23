@@ -14,6 +14,14 @@ flowchart TD
     Patterns["Commonly Used Patterns"]
     Lifecycle["SDLC &amp; ML Project Lifecycle"]
     Tools["Dev Tools"]
+    SystemsHPC["Systems &amp; HPC"]
+    LinuxSystems["Linux Systems (Planned)"]
+    HPC["High-Performance Computing (Planned)"]
+    Languages["Programming Languages"]
+    Python["Python (Planned)"]
+    Rust["Rust (Planned)"]
+    Go["Go (Planned)"]
+    CCpp["C / C++ (Planned)"]
     Reliability["Reliability Patterns (Published)"]
     FeatureFlags["Feature Flags (WIP)"]
     SDLC["SDLC Overview (Planned)"]
@@ -33,6 +41,14 @@ flowchart TD
     Site --> Patterns
     Site --> Lifecycle
     Site --> Tools
+    Site --> SystemsHPC
+    SystemsHPC --> LinuxSystems
+    SystemsHPC --> HPC
+    Site --> Languages
+    Languages --> Python
+    Languages --> Rust
+    Languages --> Go
+    Languages --> CCpp
     Patterns --> Reliability
     Patterns --> FeatureFlags
     Lifecycle --> SDLC
