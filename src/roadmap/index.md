@@ -20,6 +20,14 @@ flowchart TD
     ML["ML Project Lifecycle (Planned)"]
     FeatureEngineering["Feature Engineering (Later)"]
     Training["Training (Later)"]
+    ModelMath["Model Architecture &amp; Math (Later)"]
+    ParameterCounting["Neural Network Parameter Counting (Later)"]
+    TransformerParams["Transformer Parameter Counting (Later)"]
+    LLMTraining["LLM Training (Later)"]
+    Pretraining["Pretraining (Later)"]
+    PostTraining["Post-training (Later)"]
+    FineTuning["Fine-tuning (Later)"]
+    LoRA["LoRA / Parameter-Efficient Fine-Tuning (Later)"]
     Serving["Serving (Later)"]
 
     Site --> Patterns
@@ -33,6 +41,14 @@ flowchart TD
     ML --> FeatureEngineering
     ML --> Training
     ML --> Serving
+    Training --> ModelMath
+    ModelMath --> ParameterCounting
+    ParameterCounting --> TransformerParams
+    Training --> LLMTraining
+    LLMTraining --> Pretraining
+    LLMTraining --> PostTraining
+    PostTraining --> FineTuning
+    FineTuning --> LoRA
 </pre>
 
 The roadmap records direction, not deadlines. I’ll deepen each branch as I publish the work.
