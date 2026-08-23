@@ -17,11 +17,7 @@ flowchart TD
     SystemsHPC["Systems &amp; HPC"]
     LinuxSystems["Linux Systems (Planned)"]
     HPC["High-Performance Computing (Planned)"]
-    Languages["Programming Languages"]
-    Python["Python (Planned)"]
-    Rust["Rust (Planned)"]
-    Go["Go (Planned)"]
-    CCpp["C / C++ (Planned)"]
+    Languages["Programming Languages(Python, Rust, Go, C/C++)"]
     Reliability["Reliability Patterns (Published)"]
     FeatureFlags["Feature Flags (WIP)"]
     SDLC["SDLC Overview (Planned)"]
@@ -45,10 +41,6 @@ flowchart TD
     SystemsHPC --> LinuxSystems
     SystemsHPC --> HPC
     Site --> Languages
-    Languages --> Python
-    Languages --> Rust
-    Languages --> Go
-    Languages --> CCpp
     Patterns --> Reliability
     Patterns --> FeatureFlags
     Lifecycle --> SDLC
