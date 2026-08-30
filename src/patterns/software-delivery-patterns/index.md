@@ -3,6 +3,7 @@ layout: pattern.liquid
 title: Deployment, Release, and Rollout for Hosted Software
 eyebrow: Commonly Used Patterns
 permalink: /patterns/software-delivery/
+mermaid: true
 ---
 
 ## Why I’m Writing This
@@ -314,6 +315,64 @@ Assigns comparable user cohorts to different released variants to measure produc
 ### Progressive delivery
 
 An umbrella approach that combines gradual rollout, observability, promotion gates, and automated safety actions across deployment and release.
+
+## Building a Complete Delivery Plan
+
+Use the flow as a planning order, not a required execution timeline. Start by choosing the deployment lane, the release lane, or both. Each lane has its own progression; when both states change, choose how they are coordinated. Canary deployment appears in the deployment lane, canary release appears in the release lane, and a lockstep canary combines them.
+
+<pre class="mermaid decision-flow">
+flowchart TB
+  accTitle: Building a complete delivery plan
+  accDescr: A seven-stage planning flow for identifying deployment and release state changes, planning each transition, coordinating them, validating in production, choosing evidence and recovery, and deciding whether to automate progressive delivery.
+
+  Start([Software change]) --> State(["1 · Which states change?<br/>Choose one or both lanes"])
+
+  State -->|Deployment state| DTarget
+  State -->|Release state| RTarget
+
+  %% Mermaid renders sibling subgraphs right-to-left, so declare release first.
+  subgraph ReleaseLane["2B · Release lane"]
+    direction TB
+    RTarget["What availability changes?<br/>capability · audience · region · status"]
+    RTarget --> RControl["Which release control?<br/>deployment-coupled · flag · routing · entitlement"]
+    RControl --> RProgress["How should release progress?<br/>one step · percentage · canary release · rings · tenants · regions"]
+  end
+
+  subgraph DeploymentLane["2A · Deployment lane"]
+    direction TB
+    DTarget["What runtime target changes?<br/>artifact · configuration · schema · model"]
+    DTarget --> DApproach["Which deployment approach?<br/>recreate · rolling · blue-green"]
+    DApproach --> DProgress["How should deployment progress?<br/>one step · canary deployment · batches · rings · regions"]
+  end
+
+  DProgress --> Coordinate(["3 · If both states change,<br/>choose coordination"])
+  RProgress --> Coordinate
+
+  Coordinate -->|One state only| Single["No coordination needed"]
+  Coordinate -->|Deploy, then release| Sequential["Sequential"]
+  Coordinate -->|Same cohort together| Lockstep["Lockstep"]
+  Coordinate -->|Deployment leads release| Overlap["Pipelined or<br/>partially coupled"]
+
+  Single --> Validate(["4 · Pre-release production validation?"])
+  Sequential --> Validate
+  Lockstep --> Validate
+  Overlap --> Validate
+
+  Validate -->|Not needed| NoValidation["Continue"]
+  Validate -->|Run hidden behavior| Dark["Dark launch"]
+  Validate -->|Compare real requests| Shadow["Shadow validation"]
+
+  NoValidation --> Evidence["5 · Promotion evidence<br/>Safety baseline: health and SLO gates<br/>Add approval, time, or business metrics as needed<br/>Add A/B testing for comparative outcomes"]
+  Dark --> Evidence
+  Shadow --> Evidence
+
+  Evidence --> Recovery["6 · Failure action<br/>Pause · Disable · Roll back · Roll forward"]
+  Recovery --> Automate(["7 · For staged transitions, can progression<br/>and recovery be automated reliably?"])
+
+  Automate -->|No staged transition| ImmediatePlan["Immediate delivery plan"]
+  Automate -->|Not yet| Manual["Explicit staged plan<br/>with manual gates"]
+  Automate -->|Yes| Progressive["Progressive delivery"]
+</pre>
 
 ## How the Patterns Compose
 

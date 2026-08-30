@@ -14,7 +14,33 @@ test("software delivery patterns are generated and linked from the series", asyn
   assert.match(delivery, /Deployment, Release, and Rollout for Hosted Software/);
   assert.match(delivery, /Pattern map/);
   assert.match(delivery, /Operational comparison/);
+  assert.match(delivery, /Building a Complete Delivery Plan/);
+  assert.match(delivery, /class="[^"]*\bmermaid\b[^"]*"/);
+  assert.match(delivery, /mermaid@11\.16\.1/);
   assert.match(delivery, /A\/B testing/);
+
+  const decisionFlow = delivery.match(/<pre class="mermaid decision-flow">([\s\S]*?)<\/pre>/)?.[1] ?? "";
+  for (const concept of [
+    "Which states change",
+    "Deployment lane",
+    "What runtime target changes",
+    "Which deployment approach",
+    "How should deployment progress",
+    "Release lane",
+    "What availability changes",
+    "Which release control",
+    "How should release progress",
+    "canary deployment",
+    "canary release",
+    "Sequential",
+    "Lockstep",
+    "Pipelined or",
+    "Pause",
+    "Roll forward",
+    "No staged transition",
+  ]) {
+    assert.match(decisionFlow, new RegExp(concept));
+  }
   assert.match(delivery, /typical tendencies, not guarantees/);
   assert.equal(delivery.match(/<table>/g)?.length, 2);
 
