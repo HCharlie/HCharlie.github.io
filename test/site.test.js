@@ -4,6 +4,44 @@ import test from "node:test";
 
 const site = (path) => new URL(`../_site/${path}`, import.meta.url);
 
+test("software delivery patterns are generated and linked from the series", async () => {
+  const [patterns, delivery] = await Promise.all([
+    readFile(site("patterns/index.html"), "utf8"),
+    readFile(site("patterns/software-delivery/index.html"), "utf8"),
+  ]);
+
+  assert.match(patterns, /href="\/patterns\/software-delivery\/"/);
+  assert.match(delivery, /Deployment, Release, and Rollout for Hosted Software/);
+  assert.match(delivery, /Pattern map/);
+  assert.match(delivery, /Operational comparison/);
+  assert.match(delivery, /A\/B testing/);
+  assert.match(delivery, /typical tendencies, not guarantees/);
+  assert.equal(delivery.match(/<table>/g)?.length, 2);
+
+  const patternOrder = [
+    "Recreate",
+    "Rolling deployment",
+    "Blue-green",
+    "Feature flags",
+    "Dark launch",
+    "Shadow validation",
+    "Canary",
+    "Rings and waves",
+    "Regional or tenant rollout",
+    "A/B testing",
+    "Progressive delivery",
+  ];
+
+  for (const [, table] of delivery.matchAll(/<table>([\s\S]*?)<\/table>/g)) {
+    let previousPosition = -1;
+    for (const pattern of patternOrder) {
+      const position = table.indexOf(pattern);
+      assert.ok(position > previousPosition, `${pattern} should follow the preceding pattern group`);
+      previousPosition = position;
+    }
+  }
+});
+
 test("generated site preserves routes, content, links, Mermaid, and exclusions", async () => {
   const [home, patterns, reliability, roadmap, asset] = await Promise.all([
     readFile(site("index.html"), "utf8"),

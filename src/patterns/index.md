@@ -15,6 +15,10 @@ I’m writing these patterns down so both humans and agents can reuse them, maki
 
 - [Reliability Patterns](/patterns/reliability/) — containing dependency failures, controlling overload, preserving work, and recovering safely.
 
+## In progress
+
+- [Deployment, Release, and Rollout for Hosted Software](/patterns/software-delivery/) — clarifying the terminology, common situations, composable strategies, and operational trade-offs behind software delivery.
+
 ## Coming gradually
 
-Rollout, deployment, release, design patterns, and other patterns that show up repeatedly in real systems.
+Design patterns and other patterns that show up repeatedly in real systems.

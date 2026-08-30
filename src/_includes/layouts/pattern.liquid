@@ -119,6 +119,35 @@
     .content ul,
     .content ol { padding-left: 1.2rem; }
     .content li + li { margin-top: 0.45rem; }
+    .content table {
+      display: block;
+      width: 100%;
+      margin: 1.25rem 0;
+      overflow-x: auto;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .content th,
+    .content td {
+      min-width: 8rem;
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .content th {
+      color: var(--fg);
+      line-height: 1.35;
+    }
+    .content pre:not(.mermaid) {
+      max-width: 100%;
+      padding: 0.8rem 1rem;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--panel) 88%, var(--bg) 12%);
+    }
     .mermaid {
       margin: 1.5rem 0;
       overflow-x: auto;
