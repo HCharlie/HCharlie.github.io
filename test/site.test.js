@@ -23,6 +23,45 @@ test("deployment, release, and rollout stays focused on the mental model", async
   assert.equal(delivery.match(/<table>/g)?.length ?? 0, 0);
 });
 
+test("hosted delivery patterns form a short narrative companion", async () => {
+  const [patterns, delivery, choosing] = await Promise.all([
+    readFile(site("patterns/index.html"), "utf8"),
+    readFile(site("patterns/software-delivery/index.html"), "utf8"),
+    readFile(site("patterns/choosing-delivery-patterns/index.html"), "utf8"),
+  ]);
+
+  const conceptsLink = patterns.indexOf('href="/patterns/software-delivery/"');
+  const choosingLink = patterns.indexOf('href="/patterns/choosing-delivery-patterns/"');
+  assert.ok(conceptsLink >= 0);
+  assert.ok(choosingLink > conceptsLink);
+  assert.match(delivery, /href="\/patterns\/choosing-delivery-patterns\/"/);
+  assert.match(choosing, /href="\/patterns\/software-delivery\/"/);
+  assert.match(choosing, /Choosing Hosted Software Delivery Patterns/);
+
+  for (const pattern of [
+    "Recreate",
+    "Rolling deployment",
+    "Blue-green",
+    "Feature flags",
+    "Dark launch",
+    "Shadow validation",
+    "Canary",
+    "Rings",
+    "A/B testing",
+    "Progressive delivery",
+  ]) {
+    assert.match(choosing, new RegExp(pattern, "i"));
+  }
+
+  assert.equal(choosing.match(/<table>/g)?.length, 1);
+  const flow = choosing.match(/<pre class="mermaid delivery-flow">([\s\S]*?)<\/pre>/)?.[1] ?? "";
+  for (const stage of ["Runtime", "Availability", "Validation", "Progression", "Evidence and recovery"]) {
+    assert.match(flow, new RegExp(stage));
+  }
+  assert.doesNotMatch(choosing, /Reference: State-Change Combinations/);
+  assert.doesNotMatch(choosing, /Operational Trade-offs/);
+});
+
 test("generated site preserves routes, content, links, Mermaid, and exclusions", async () => {
   const [home, patterns, reliability, roadmap, asset] = await Promise.all([
     readFile(site("index.html"), "utf8"),
