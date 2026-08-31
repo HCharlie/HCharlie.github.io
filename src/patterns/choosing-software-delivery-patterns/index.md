@@ -1,7 +1,7 @@
 ---
 layout: pattern.liquid
 title: Choosing Delivery Patterns
-eyebrow: Hosted Software Delivery · Part 2
+eyebrow: Delivery Patterns · Part 2
 permalink: /patterns/choosing-delivery-patterns/
 mermaid: true
 ---

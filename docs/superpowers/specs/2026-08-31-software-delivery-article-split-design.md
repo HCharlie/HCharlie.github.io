@@ -25,7 +25,7 @@ Split it into two short, connected articles. Each article should make one clear 
 
 - Source: `src/patterns/software-delivery-patterns/index.md`
 - Route: `/patterns/software-delivery/`
-- Eyebrow: **Hosted Software Delivery · Part 1**
+- Eyebrow: **Delivery Patterns · Part 1**
 - Title: **Deployment, Release, and Rollout**
 
 The existing route remains unchanged so published links continue to work.
@@ -69,7 +69,7 @@ The conclusion will include a natural transition similar to:
 
 - New source: `src/patterns/choosing-software-delivery-patterns/index.md`
 - Route: `/patterns/choosing-delivery-patterns/`
-- Eyebrow: **Hosted Software Delivery · Part 2**
+- Eyebrow: **Delivery Patterns · Part 2**
 - Title: **Choosing Delivery Patterns**
 
 ### Goal
@@ -142,8 +142,8 @@ The page will not reproduce:
 
 Update `src/patterns/index.md` so both articles appear under **Published**, next to each other in reading order:
 
-1. Hosted Software Delivery, Part 1: Deployment, Release, and Rollout
-2. Hosted Software Delivery, Part 2: Choosing Delivery Patterns
+1. Delivery Patterns, Part 1: Deployment, Release, and Rollout
+2. Delivery Patterns, Part 2: Choosing Patterns
 
 Each description should state the article’s distinct purpose. The first builds the mental model; the second applies it.
 

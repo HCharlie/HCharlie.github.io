@@ -1,7 +1,7 @@
 ---
 layout: pattern.liquid
 title: Deployment, Release, and Rollout
-eyebrow: Hosted Software Delivery · Part 1
+eyebrow: Delivery Patterns · Part 1
 permalink: /patterns/software-delivery/
 ---
 

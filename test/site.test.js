@@ -10,8 +10,8 @@ test("deployment, release, and rollout stays focused on the mental model", async
     readFile(site("patterns/software-delivery/index.html"), "utf8"),
   ]);
 
-  assert.match(patterns, /Hosted Software Delivery, Part 1: Deployment, Release, and Rollout/);
-  assert.match(delivery, /Hosted Software Delivery · Part 1/);
+  assert.match(patterns, /Delivery Patterns, Part 1: Deployment, Release, and Rollout/);
+  assert.match(delivery, /Delivery Patterns · Part 1/);
   assert.match(delivery, /<h1 id="page-title">Deployment, Release, and Rollout<\/h1>/);
   assert.match(delivery, /Deployment changes the runtime state/);
   assert.match(delivery, /Release changes availability/);
@@ -39,9 +39,10 @@ test("hosted delivery patterns form a short narrative companion", async () => {
   assert.ok(choosingLink > conceptsLink);
   assert.ok(comingHeading > choosingLink);
   assert.doesNotMatch(patterns, /<h2>In progress<\/h2>/);
+  assert.match(patterns, /Delivery Patterns, Part 2: Choosing Patterns/);
   assert.match(delivery, /href="\/patterns\/choosing-delivery-patterns\/">Continue to Part 2:/);
   assert.match(choosing, /href="\/patterns\/software-delivery\/">Part 1:/);
-  assert.match(choosing, /Hosted Software Delivery · Part 2/);
+  assert.match(choosing, /Delivery Patterns · Part 2/);
   assert.match(choosing, /<h1 id="page-title">Choosing Delivery Patterns<\/h1>/);
 
   const patternHeadings = [
