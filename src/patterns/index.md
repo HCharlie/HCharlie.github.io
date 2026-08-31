@@ -14,11 +14,8 @@ I’m writing these patterns down so both humans and agents can reuse them, maki
 ## Published
 
 - [Reliability Patterns](/patterns/reliability/) — containing dependency failures, controlling overload, preserving work, and recovering safely.
-
-## In progress
-
-- [Deployment, Release, and Rollout for Hosted Software](/patterns/software-delivery/) — separating runtime changes, availability changes, and the way each transition progresses.
-- [Choosing Hosted Software Delivery Patterns](/patterns/choosing-delivery-patterns/) — combining deployment, release, validation, rollout, experimentation, and recovery choices into one plan.
+- [Hosted Software Delivery, Part 1: Deployment, Release, and Rollout](/patterns/software-delivery/) — separating runtime changes, availability changes, and the way each transition progresses.
+- [Hosted Software Delivery, Part 2: Choosing Delivery Patterns](/patterns/choosing-delivery-patterns/) — combining deployment, release, validation, rollout, experimentation, and recovery choices into one plan.
 
 ## Coming gradually
 

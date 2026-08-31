@@ -25,7 +25,8 @@ Split it into two short, connected articles. Each article should make one clear 
 
 - Source: `src/patterns/software-delivery-patterns/index.md`
 - Route: `/patterns/software-delivery/`
-- Title: **Deployment, Release, and Rollout for Hosted Software**
+- Eyebrow: **Hosted Software Delivery · Part 1**
+- Title: **Deployment, Release, and Rollout**
 
 The existing route remains unchanged so published links continue to work.
 
@@ -60,15 +61,16 @@ The page will not contain:
 
 The conclusion will include a natural transition similar to:
 
-> This model explains the states involved. To turn it into a practical delivery plan, continue with [Choosing Hosted Software Delivery Patterns](/patterns/choosing-delivery-patterns/).
+> This model explains the states involved. To turn it into a practical delivery plan, [Continue to Part 2: Choosing Delivery Patterns](/patterns/choosing-delivery-patterns/).
 
-## Article 2: Choosing Hosted Software Delivery Patterns
+## Article 2: Choosing Delivery Patterns
 
 ### Location
 
 - New source: `src/patterns/choosing-software-delivery-patterns/index.md`
 - Route: `/patterns/choosing-delivery-patterns/`
-- Title: **Choosing Hosted Software Delivery Patterns**
+- Eyebrow: **Hosted Software Delivery · Part 2**
+- Title: **Choosing Delivery Patterns**
 
 ### Goal
 
@@ -138,10 +140,10 @@ The page will not reproduce:
 
 ## Patterns Series Page
 
-Update `src/patterns/index.md` so both articles appear next to each other in reading order:
+Update `src/patterns/index.md` so both articles appear under **Published**, next to each other in reading order:
 
-1. Deployment, Release, and Rollout for Hosted Software
-2. Choosing Hosted Software Delivery Patterns
+1. Hosted Software Delivery, Part 1: Deployment, Release, and Rollout
+2. Hosted Software Delivery, Part 2: Choosing Delivery Patterns
 
 Each description should state the article’s distinct purpose. The first builds the mental model; the second applies it.
 

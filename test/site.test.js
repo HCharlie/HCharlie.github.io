@@ -10,12 +10,13 @@ test("deployment, release, and rollout stays focused on the mental model", async
     readFile(site("patterns/software-delivery/index.html"), "utf8"),
   ]);
 
-  assert.match(patterns, /href="\/patterns\/software-delivery\/"/);
-  assert.match(delivery, /Deployment, Release, and Rollout for Hosted Software/);
+  assert.match(patterns, /Hosted Software Delivery, Part 1: Deployment, Release, and Rollout/);
+  assert.match(delivery, /Hosted Software Delivery · Part 1/);
+  assert.match(delivery, /<h1 id="page-title">Deployment, Release, and Rollout<\/h1>/);
   assert.match(delivery, /Deployment changes the runtime state/);
   assert.match(delivery, /Release changes availability/);
   assert.match(delivery, /Rollout describes how/);
-  assert.match(delivery, /href="\/patterns\/choosing-delivery-patterns\/"/);
+  assert.match(delivery, /href="\/patterns\/choosing-delivery-patterns\/">Continue to Part 2:/);
   assert.doesNotMatch(delivery, /Pattern Map/);
   assert.doesNotMatch(delivery, /Operational Trade-offs/);
   assert.doesNotMatch(delivery, /Reference: State-Change Combinations/);
@@ -32,11 +33,16 @@ test("hosted delivery patterns form a short narrative companion", async () => {
 
   const conceptsLink = patterns.indexOf('href="/patterns/software-delivery/"');
   const choosingLink = patterns.indexOf('href="/patterns/choosing-delivery-patterns/"');
-  assert.ok(conceptsLink >= 0);
+  const publishedHeading = patterns.indexOf("<h2>Published</h2>");
+  const comingHeading = patterns.indexOf("<h2>Coming gradually</h2>");
+  assert.ok(conceptsLink > publishedHeading);
   assert.ok(choosingLink > conceptsLink);
-  assert.match(delivery, /href="\/patterns\/choosing-delivery-patterns\/"/);
-  assert.match(choosing, /href="\/patterns\/software-delivery\/"/);
-  assert.match(choosing, /Choosing Hosted Software Delivery Patterns/);
+  assert.ok(comingHeading > choosingLink);
+  assert.doesNotMatch(patterns, /<h2>In progress<\/h2>/);
+  assert.match(delivery, /href="\/patterns\/choosing-delivery-patterns\/">Continue to Part 2:/);
+  assert.match(choosing, /href="\/patterns\/software-delivery\/">Part 1:/);
+  assert.match(choosing, /Hosted Software Delivery · Part 2/);
+  assert.match(choosing, /<h1 id="page-title">Choosing Delivery Patterns<\/h1>/);
 
   const patternHeadings = [
     "Recreate",

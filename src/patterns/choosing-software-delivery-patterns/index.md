@@ -1,7 +1,7 @@
 ---
 layout: pattern.liquid
-title: Choosing Hosted Software Delivery Patterns
-eyebrow: Commonly Used Patterns
+title: Choosing Delivery Patterns
+eyebrow: Hosted Software Delivery · Part 2
 permalink: /patterns/choosing-delivery-patterns/
 mermaid: true
 ---
@@ -10,7 +10,7 @@ mermaid: true
 
 Names such as blue-green, canary, feature flags, and progressive delivery are often presented as competing strategies. They are not. They answer different questions in a delivery plan.
 
-The distinction starts with the model from [Deployment, Release, and Rollout for Hosted Software](/patterns/software-delivery/): deployment changes what runs, release changes what is available, and rollout describes how either change progresses.
+The distinction starts with [Part 1: Deployment, Release, and Rollout](/patterns/software-delivery/): deployment changes what runs, release changes what is available, and rollout describes how either change progresses.
 
 Consider a hosted search service introducing a new ranking implementation. The team wants to run the new code in production, compare its answers with the current system, expose it to a small audience, and expand only when the evidence is healthy. No single pattern covers that whole journey. The team must make several choices that fit together.
 

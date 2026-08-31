@@ -1,7 +1,7 @@
 ---
 layout: pattern.liquid
-title: Deployment, Release, and Rollout for Hosted Software
-eyebrow: Commonly Used Patterns
+title: Deployment, Release, and Rollout
+eyebrow: Hosted Software Delivery · Part 1
 permalink: /patterns/software-delivery/
 ---
 
@@ -85,4 +85,4 @@ The practical benefit of separating these terms is precision. Instead of saying 
 
 That sentence exposes several different decisions. Runtime replacement, availability control, validation, progression, and recovery need not come from one named pattern. They are parts of a delivery plan that can be composed.
 
-This model explains the states involved. To turn it into a practical delivery plan, continue with [Choosing Hosted Software Delivery Patterns](/patterns/choosing-delivery-patterns/).
+This model explains the states involved. To turn it into a practical delivery plan, [Continue to Part 2: Choosing Delivery Patterns](/patterns/choosing-delivery-patterns/).
