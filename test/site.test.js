@@ -104,7 +104,11 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
 
   assert.ok(asset.length > 0);
   assert.match(home, /Hello, I’m Changli/);
-  assert.match(home, /href="\/patterns\/"/);
+  const homepageSdlc = home.indexOf('<a class="row" href="/sdlc/">');
+  const homepagePatterns = home.indexOf('<a class="row" href="/patterns/">');
+  assert.ok(homepageSdlc >= 0);
+  assert.ok(homepagePatterns > homepageSdlc);
+  assert.match(home, /<a class="row" href="\/sdlc\/">[\s\S]*?<h3>SDLC<\/h3>[\s\S]*?<span class="meta">Published article<\/span>/);
   assert.match(home, /href="\/roadmap\/"/);
   assert.match(home, /src="\/assets\/changli\.jpg"/);
   assert.match(patterns, /Software patterns are compressed experience/);
@@ -115,6 +119,7 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.match(roadmap, /Delivery Patterns \(Published\)/);
   assert.match(roadmap, /SDLC Overview \(Published\)/);
   assert.match(roadmap, /href="\/sdlc\/"/);
+  assert.match(roadmap, /click SDLC "\/sdlc\/"/);
   assert.doesNotMatch(roadmap, /SDLC Overview \(Next\)/);
   assert.match(roadmap, /Sizing Systems \(Planned\)/);
   assert.doesNotMatch(roadmap, /Feature Flags \(WIP\)/);

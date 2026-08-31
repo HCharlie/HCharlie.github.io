@@ -46,6 +46,7 @@ flowchart TD
     Patterns --> Reliability
     Patterns --> DeliveryPatterns
     Lifecycle --> SDLC
+    click SDLC "/sdlc/" "Read the SDLC overview"
     Lifecycle --> ML
     Tools --> DevTools["Dev Tools (Planned)"]
     ML --> FeatureEngineering
