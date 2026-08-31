@@ -5,7 +5,7 @@
 
 ## Purpose
 
-Publish a short, general introduction to the Software Development Life Cycle. The article should give readers a memorable start-to-finish model, show the typical work and tools around each phase, and avoid becoming a detailed methodology or product catalogue.
+Publish a short, general introduction to the Software Development Life Cycle. The article should give readers a memorable start-to-finish model, show the typical work and tools around each phase, and avoid becoming a detailed methodology or product catalogue. A lightweight appointment-booking story should make the knowledge approachable while a repeated phase structure makes it transferable and memorable.
 
 ## Scope
 
@@ -31,6 +31,22 @@ Define → Develop → Deliver → Operate → Retire
 
 The model is linear for explanation and memory. The conclusion should state that real work moves backward and forward between phases, and that operational evidence often begins the next cycle.
 
+## Narrative Spine
+
+Follow a small team building an appointment-booking application from the initial problem to eventual retirement:
+
+1. The team discovers that users struggle to arrange appointments and defines what the software should solve.
+2. It designs the workflow, builds the application, reviews the code, and verifies its behavior.
+3. It packages and releases the application to its intended users.
+4. It observes failures and usage, supports users, and improves the system with real evidence.
+5. A replacement eventually takes over, so the team migrates required data and removes the old application safely.
+
+Use only one or two story sentences per phase. The story is a thread, not a detailed case study. Begin each phase with what happens next, extract the reusable phase structure, and then return to the story at the transition.
+
+The editorial rule is:
+
+> Use stories to make knowledge approachable, then use structure to make it transferable and memorable.
+
 ## Repeated Phase Format
 
 Each phase should contain five concise elements:
@@ -47,6 +63,7 @@ Use level-two headings for the five phases. Keep the repeated elements easy to s
 
 ### Define
 
+- Story beat: the team investigates why arranging appointments is difficult and agrees on the problem to solve
 - Purpose: decide what should be built and why
 - Typical work: discover the problem, assess feasibility, establish scope, gather requirements, and sketch the design
 - Tool categories: documents, issue trackers, diagrams, and prototypes
@@ -55,6 +72,7 @@ Use level-two headings for the five phases. Keep the repeated elements easy to s
 
 ### Develop
 
+- Story beat: the team designs the booking workflow, implements it, reviews the code, and tests expected and failure paths
 - Purpose: turn the agreed design into a verified software change
 - Typical work: design in detail, implement, review, integrate, and test
 - Tool categories: editors and IDEs, version control, code hosting, build tools, and test frameworks
@@ -63,6 +81,7 @@ Use level-two headings for the five phases. Keep the repeated elements easy to s
 
 ### Deliver
 
+- Story beat: the team packages the verified application and makes it available to its first users
 - Purpose: make a verified version available for use
 - Typical work: package, release, deploy or distribute, migrate, and roll out
 - Tool categories: CI/CD, artifact packaging, registries, infrastructure automation, deployment platforms, and distribution channels
@@ -75,6 +94,7 @@ Link briefly to [Delivery Patterns, Part 1: Deployment, Release, and Rollout](/p
 
 ### Operate
 
+- Story beat: real users create bookings, operational evidence reveals failures and friction, and the team responds
 - Purpose: understand and support software in real use
 - Typical work: observe behavior, support users, respond to incidents, fix defects, manage security, and improve the system
 - Tool categories: metrics, logs, traces, error tracking, alerting, incident management, and user feedback
@@ -85,6 +105,7 @@ Explain that observation is cross-cutting: telemetry should be specified, design
 
 ### Retire
 
+- Story beat: a replacement takes over, so the team migrates active bookings and required history before removing the old application
 - Purpose: remove software safely when it is no longer needed
 - Typical work: notify users, migrate users and data, stop traffic, archive required information, remove dependencies, and decommission infrastructure
 - Tool categories: feature controls, migration tools, dependency inventories, archival storage, and infrastructure automation
@@ -105,6 +126,8 @@ Explain that observation is cross-cutting: telemetry should be specified, design
 - Show the five-phase lifecycle once as a short text sequence.
 - Keep paragraphs and lists brief.
 - Preserve the personal site’s plain-language tone.
+- Let the appointment-booking story carry transitions instead of adding abstract connective prose.
+- Keep the story subordinate to the reusable model; do not add characters, dialogue, or unnecessary product detail.
 - One article should have one clear purpose: remembering the major phases and recognizing the work and tools around them.
 
 ## Roadmap Integration
@@ -138,6 +161,7 @@ Visual review should verify:
 ## Success Criteria
 
 - A reader can recall `Define → Develop → Deliver → Operate → Retire` after reading.
+- The appointment-booking story makes the lifecycle concrete without becoming a case study.
 - Each phase explains its purpose, typical work, tools, examples, and output.
 - Docker, Kubernetes, deployment, and observability are placed in the correct context.
 - The article remains general rather than assuming all software is a hosted microservice.
