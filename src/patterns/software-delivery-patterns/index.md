@@ -82,7 +82,219 @@ Deployment rollout: current runtime state → target runtime state
 Release rollout:    current availability → target availability
 ```
 
-## Deriving the Common Situations
+## From Concepts to Delivery Patterns
+
+The two-state model explains why familiar delivery pattern names overlap. Some patterns change how runtime targets are replaced. Others control who can access a capability, choose how a transition progresses, gather evidence, or automate promotion and recovery.
+
+A named pattern usually fixes only some parts of a delivery plan. The remaining choices must still be made.
+
+The goal is therefore not to find one pattern that does everything. It is to identify what each pattern controls, compare its trade-offs, and combine the necessary choices into a complete plan.
+
+## Pattern Map
+
+The patterns below operate at different layers and should be composed rather than treated as mutually exclusive alternatives. Rows are ordered by their role in a delivery plan: deployment approach, release control, pre-release validation, rollout policy and scope, experimentation, then umbrella approach.
+
+| Pattern | Pattern type or layer | State affected | Mechanism and typical scope |
+| --- | --- | --- | --- |
+| Recreate | Deployment replacement | Deployment; often release too | Stop all old runtime targets, then start the new version across the full deployment scope |
+| Rolling deployment | Deployment progression | Deployment | An orchestrator replaces instances in batches, availability zones, or regions |
+| Blue-green | Deployment topology | Deployment; optionally release | Parallel environments plus an immediate cutover or gradual traffic shift |
+| Feature flags | Release control | Release | Runtime evaluation targets all users, percentages, tenants, or rings |
+| Dark launch | Exposure and validation technique | Deployment while release remains unchanged | A hidden flag or routing rule enables internal or otherwise hidden use |
+| Shadow validation | Validation technique | Deployment while release remains unchanged | Production traffic is mirrored to a shadow workload and its output is discarded |
+| Canary | Rollout policy | Deployment, release, or both | Orchestration, routing, or flags expose a small instance, traffic, or audience cohort |
+| Rings and waves | Rollout policy | Deployment, release, or both | Ordered risk cohorts change one ring or wave at a time |
+| Regional or tenant rollout | Scope-selection policy | Deployment, release, or both | Routing, configuration, or entitlements select region or tenant cohorts |
+| A/B testing | Experimentation policy | Release | A flag, router, or experiment service assigns comparable user cohorts to variants |
+| Progressive delivery | Umbrella approach | Deployment, release, or both | Automation combines gradual stages, evidence, promotion gates, and recovery |
+
+### Important distinctions
+
+- **Recreate, rolling, and blue-green make different runtime choices.** Recreate replaces a deployment scope in one step, rolling changes targets incrementally, and blue-green prepares parallel environments. They may be alternatives at one boundary or nested at different boundaries.
+- **Blue-green and canary answer different questions.** Blue-green supplies separate runtime environments; canary limits the first cohort. A team can route canary traffic to a green environment.
+- **Dark launch and shadow validation gather different evidence.** A dark launch runs hidden behavior for a restricted audience or path. Shadow validation mirrors real requests to another workload and discards its output.
+- **Canary and A/B testing have different primary goals.** Canary asks whether a change is safe enough to expand. A/B testing asks which variant produces better outcomes. They can be combined with the same safety guardrails.
+- **Progressive delivery is an umbrella.** It coordinates staged exposure, evidence, promotion gates, and recovery rather than competing with the patterns it combines.
+
+## Operational Trade-offs
+
+The Pattern Map shows what each pattern controls. The comparison below shows the operational constraints that influence when it fits.
+
+The values describe typical tendencies, not guarantees. Data migrations, persistent side effects, shared dependencies, and the chosen rollout policy can dominate availability, risk, and recovery time. Blast radius means the initial exposure before a rollout expands.
+
+| Pattern | Runtime profile | Risk and recovery | Main trade-off | Best fit |
+| --- | --- | --- | --- | --- |
+| Recreate | Interruption expected; low overhead at about 1× capacity | All users at the deployment scope; redeploy the previous version or roll forward | Simplest and least expensive, but causes interruption and exposes the whole service | Development and staging environments, batch jobs, and small services that tolerate downtime |
+| Rolling deployment | Usually no downtime; about 1× capacity plus temporary surge | Current batch; pause, then restore or replace affected targets | Avoids a second full environment, but requires readiness checks and safe mixed-version operation | Stateless or compatible services, microservices, and Kubernetes workloads |
+| Blue-green | Usually no downtime; up to about 2× application capacity | All shifted traffic after an immediate cutover; route back only while blue and its data remain compatible | Provides isolated validation and fast switchback, but costs duplicate capacity and requires a safe cutover | Important services where parallel environments are feasible and fast switchback matters |
+| Feature flags | No inherent availability impact; low runtime and flag-service overhead | Flag-selected audience; disable the flag, although completed side effects remain | Separates deployment from release, but creates flag debt and additional test combinations | Hosted capabilities that should release independently from deployment |
+| Dark launch | No intended visible interruption; cost depends on hidden execution volume | Hidden audience and shared dependencies; disable the hidden path | Validates hidden behavior in production, but can create hidden load, divergence, and cleanup work | Capabilities that can run safely for internal or hidden audiences |
+| Shadow validation | No intended user-visible output; cost grows with mirrored traffic and may approach 2× compute | Infrastructure and side effects may still be exposed; stop traffic mirroring | Enables comparison with real requests, but adds compute, privacy, isolation, and analysis work | Backend rewrites, performance validation, data pipelines, and ML models |
+| Canary | No inherent availability impact; low to medium canary or surge capacity | Canary cohort; stop expansion and remove its traffic or access | Limits initial exposure, but needs representative cohorts, routing control, and strong observability | High-traffic services, risky changes, and ML model updates |
+| Rings and waves | Depends on the underlying mechanism; no fixed capacity overhead | Current ring or wave; pause, restore, or disable the affected cohort | Creates explicit risk checkpoints, but slows delivery and prolongs version skew | Enterprise, regulated, or heterogeneous user and device populations |
+| Regional or tenant rollout | Depends on the underlying mechanism; isolation may require spare capacity | Current region or tenant cohort; isolate, disable, or roll it back | Contains failures within meaningful boundaries, but cohorts may differ in traffic, dependencies, and configuration | Multi-region or multi-tenant systems needing isolation |
+| A/B testing | No inherent availability impact; low runtime plus experimentation and analytics overhead | Variant cohort, with potentially broader shared dependencies; return users to control | Measures causal outcomes, but requires stable assignment, sufficient samples, and statistical discipline | Product experiments, UI or workflow variants, and business-metric optimization |
+| Progressive delivery | Depends on the composed mechanisms; adds delivery-platform overhead | Current stage; automatically pause, disable, roll back, or roll forward | Standardizes gradual evidence and recovery, but requires mature controls, automation, and ownership | Teams repeatedly delivering high-risk changes at scale |
+
+## Choosing a Delivery Plan
+
+Before choosing named patterns, identify which state must change and whether two transitions need coordination:
+
+- **Deployment only:** runtime changes while release availability stays the same.
+- **Release only:** availability changes after the required runtime already exists.
+- **Deployment then release:** both states change sequentially.
+- **Deployment and release overlap:** both states progress in lockstep, in a pipeline, or with deployment leading release.
+
+A complete plan then answers seven questions:
+
+1. Which states change?
+2. What target, mechanism, scope, and progression apply to each lane?
+3. How are deployment and release coordinated?
+4. Is pre-release production validation needed?
+5. What evidence permits promotion?
+6. What happens on failure?
+7. Can staged progression and recovery be automated reliably?
+
+The decision flow below turns those questions into one practical planning order.
+
+### Building a Complete Delivery Plan
+
+Use the flow as a planning order, not a required execution timeline. Start by choosing the deployment lane, the release lane, or both. Each lane has its own progression; when both states change, choose how they are coordinated. Canary deployment appears in the deployment lane, canary release appears in the release lane, and a lockstep canary combines them.
+
+<pre class="mermaid decision-flow">
+flowchart TB
+  accTitle: Building a complete delivery plan
+  accDescr: A seven-stage planning flow for identifying deployment and release state changes, planning each transition, coordinating them, validating in production, choosing evidence and recovery, and deciding whether to automate progressive delivery.
+
+  Start([Software change]) --> State(["1 · Which states change?<br/>Choose one or both lanes"])
+
+  State -->|Deployment state| DTarget
+  State -->|Release state| RTarget
+
+  %% Mermaid renders sibling subgraphs right-to-left, so declare release first.
+  subgraph ReleaseLane["2B · Release lane"]
+    direction TB
+    RTarget["What availability changes?<br/>capability · audience · region · status"]
+    RTarget --> RControl["Which release control?<br/>deployment-coupled · flag · routing · entitlement"]
+    RControl --> RProgress["How should release progress?<br/>one step · percentage · canary release · rings · tenants · regions"]
+  end
+
+  subgraph DeploymentLane["2A · Deployment lane"]
+    direction TB
+    DTarget["What runtime target changes?<br/>artifact · configuration · schema · model"]
+    DTarget --> DApproach["Which deployment approach?<br/>recreate · rolling · blue-green"]
+    DApproach --> DProgress["How should deployment progress?<br/>one step · canary deployment · batches · rings · regions"]
+  end
+
+  DProgress --> Coordinate(["3 · If both states change,<br/>choose coordination"])
+  RProgress --> Coordinate
+
+  Coordinate -->|One state only| Single["No coordination needed"]
+  Coordinate -->|Deploy, then release| Sequential["Sequential"]
+  Coordinate -->|Same cohort together| Lockstep["Lockstep"]
+  Coordinate -->|Deployment leads release| Overlap["Pipelined or<br/>partially coupled"]
+
+  Single --> Validate(["4 · Pre-release production validation?"])
+  Sequential --> Validate
+  Lockstep --> Validate
+  Overlap --> Validate
+
+  Validate -->|Not needed| NoValidation["Continue"]
+  Validate -->|Run hidden behavior| Dark["Dark launch"]
+  Validate -->|Compare real requests| Shadow["Shadow validation"]
+
+  NoValidation --> Evidence["5 · Promotion evidence<br/>Safety baseline: health and SLO gates<br/>Add approval, time, or business metrics as needed<br/>Add A/B testing for comparative outcomes"]
+  Dark --> Evidence
+  Shadow --> Evidence
+
+  Evidence --> Recovery["6 · Failure action<br/>Pause · Disable · Roll back · Roll forward"]
+  Recovery --> Automate(["7 · For staged transitions, can progression<br/>and recovery be automated reliably?"])
+
+  Automate -->|No staged transition| ImmediatePlan["Immediate delivery plan"]
+  Automate -->|Not yet| Manual["Explicit staged plan<br/>with manual gates"]
+  Automate -->|Yes| Progressive["Progressive delivery"]
+</pre>
+
+## Worked Delivery Plans
+
+The flow produces a set of choices rather than one winning pattern. The following examples show how those choices become complete delivery plans. They are representative compositions, not standardized bundles that every system should adopt.
+
+### 1. Simple low-risk delivery
+
+```text
+Recreate deployment
++ immediate release
++ smoke test
++ redeploy the previous version on failure
+```
+
+Use when simplicity matters more than downtime or gradual risk reduction.
+
+### 2. Standard rolling service update
+
+```text
+Immutable artifact
++ rolling deployment
++ readiness and SLO gates
++ pause or roll forward
++ no separate release change
+```
+
+Use for compatible backend updates or internal changes that do not introduce new customer availability.
+
+### 3. Deploy first, release progressively
+
+```text
+Rolling or blue-green deployment
++ feature flag off
++ runtime validation
++ internal users
++ percentage or tenant rollout
++ technical and product gates
++ disable the flag on failure
+```
+
+This is a representative hosted SaaS plan. Deployment and release are intentionally separated so runtime risk and product risk can be evaluated independently.
+
+### 4. Coupled canary delivery
+
+```text
+Canary deployment
++ weighted traffic routing
++ matching user exposure
++ SLO gates
++ expand or roll back
+```
+
+Deployment and release move together. This shortens the delivery timeline but makes failures harder to attribute because both states change at once.
+
+### 5. Shadow validation followed by release
+
+```text
+Shadow workload
++ mirrored production traffic
++ output comparison
++ canary deployment
++ feature or traffic rollout
+```
+
+Use for risky backend rewrites, data pipelines, or ML models. It provides stronger production evidence at the cost of additional infrastructure and operational effort.
+
+### 6. Pipelined regional delivery
+
+```text
+Deploy Region A
++ validate
++ release Region A while deploying Region B
++ repeat
++ regional gates and rollback
+```
+
+Use for large multi-region systems where deployment should remain one stage ahead of release.
+
+## Reference: State-Change Combinations
+
+The decision flow begins by asking which states change. The detailed cases below derive the immediate, progressive, sequential, and overlapping combinations behind that first choice.
 
 The common situations can be derived from two possible state changes:
 
@@ -215,249 +427,11 @@ Release:          1% → 10% → 50% → R₁
 
 Deployment leads release, but both progress during the same delivery window. This is useful when additional runtime capacity must exist before more users can be exposed.
 
-### Reading familiar patterns through the situations
-
-- **Blue-green** prepares parallel deployment states; traffic movement may then use an immediate, percentage, canary, or regional release transition.
-- **Feature flags** control release state and allow release to happen after deployment, although they can also participate in a coupled rollout.
-- **Rolling deployment** defines a progressive deployment transition but says nothing by itself about release availability.
-- **Canary** defines a small initial stage and may apply to deployment, release, or both together.
-- **Dark launch** usually changes deployment state while leaving release availability unchanged.
-
-## The Composable Model
-
-A software delivery approach can be described by choosing across several dimensions:
-
-1. **Target:** What is changing—runtime artifact, capability, configuration, schema, or model?
-2. **Mechanism:** What controls the change—orchestrator, traffic router, feature flag, entitlement, or configuration?
-3. **Scope:** Which instances, users, tenants, regions, or risk rings change first?
-4. **Progression:** Does it happen all at once, in rolling batches, by percentage, through canaries, or in waves?
-5. **Promotion gate:** What evidence allows expansion—time, approval, health checks, SLOs, or business metrics?
-6. **Recovery:** What happens on failure—pause, disable, rollback, or roll forward?
-
-A named pattern usually fixes only some of these dimensions. The remaining choices must still be made.
-
-## Patterns to Examine
-
-These patterns operate at different layers and should be composed rather than treated as mutually exclusive alternatives. Recreate, rolling, and blue-green are deployment approaches; feature flags are a release control; canary and rings are rollout policies; A/B testing is an experimentation policy; and progressive delivery is an umbrella approach.
-
-The tables and notes are ordered by role in a complete delivery plan: deployment approach, release control, pre-release validation, rollout policy and scope, experimentation, then umbrella approach. This is a decision order, not a required execution timeline.
-
-### Pattern map
-
-| Pattern | Pattern type or layer | State affected | Mechanism and typical scope |
-| --- | --- | --- | --- |
-| Recreate | Deployment replacement | Deployment; often release too | Stop all old runtime targets, then start the new version across the full deployment scope |
-| Rolling deployment | Deployment progression | Deployment | An orchestrator replaces instances in batches, availability zones, or regions |
-| Blue-green | Deployment topology | Deployment; optionally release | Parallel environments plus an immediate cutover or gradual traffic shift |
-| Feature flags | Release control | Release | Runtime evaluation targets all users, percentages, tenants, or rings |
-| Dark launch | Exposure and validation technique | Deployment while release remains unchanged | A hidden flag or routing rule enables internal or otherwise hidden use |
-| Shadow validation | Validation technique | Deployment while release remains unchanged | Production traffic is mirrored to a shadow workload and its output is discarded |
-| Canary | Rollout policy | Deployment, release, or both | Orchestration, routing, or flags expose a small instance, traffic, or audience cohort |
-| Rings and waves | Rollout policy | Deployment, release, or both | Ordered risk cohorts change one ring or wave at a time |
-| Regional or tenant rollout | Scope-selection policy | Deployment, release, or both | Routing, configuration, or entitlements select region or tenant cohorts |
-| A/B testing | Experimentation policy | Release | A flag, router, or experiment service assigns comparable user cohorts to variants |
-| Progressive delivery | Umbrella approach | Deployment, release, or both | Automation combines gradual stages, evidence, promotion gates, and recovery |
-
-The comparisons below describe typical tendencies, not guarantees. Data migrations, persistent side effects, shared dependencies, and the chosen rollout policy can dominate availability, risk, and recovery time. Blast radius means the initial exposure before a rollout expands.
-
-### Operational comparison
-
-| Pattern | Runtime profile | Risk and recovery | Main trade-off | Best fit |
-| --- | --- | --- | --- | --- |
-| Recreate | Interruption expected; low overhead at about 1× capacity | All users at the deployment scope; redeploy the previous version or roll forward | Simplest and least expensive, but causes interruption and exposes the whole service | Development and staging environments, batch jobs, and small services that tolerate downtime |
-| Rolling deployment | Usually no downtime; about 1× capacity plus temporary surge | Current batch; pause, then restore or replace affected targets | Avoids a second full environment, but requires readiness checks and safe mixed-version operation | Stateless or compatible services, microservices, and Kubernetes workloads |
-| Blue-green | Usually no downtime; up to about 2× application capacity | All shifted traffic after an immediate cutover; route back only while blue and its data remain compatible | Provides isolated validation and fast switchback, but costs duplicate capacity and requires a safe cutover | Important services where parallel environments are feasible and fast switchback matters |
-| Feature flags | No inherent availability impact; low runtime and flag-service overhead | Flag-selected audience; disable the flag, although completed side effects remain | Separates deployment from release, but creates flag debt and additional test combinations | Hosted capabilities that should release independently from deployment |
-| Dark launch | No intended visible interruption; cost depends on hidden execution volume | Hidden audience and shared dependencies; disable the hidden path | Validates hidden behavior in production, but can create hidden load, divergence, and cleanup work | Capabilities that can run safely for internal or hidden audiences |
-| Shadow validation | No intended user-visible output; cost grows with mirrored traffic and may approach 2× compute | Infrastructure and side effects may still be exposed; stop traffic mirroring | Enables comparison with real requests, but adds compute, privacy, isolation, and analysis work | Backend rewrites, performance validation, data pipelines, and ML models |
-| Canary | No inherent availability impact; low to medium canary or surge capacity | Canary cohort; stop expansion and remove its traffic or access | Limits initial exposure, but needs representative cohorts, routing control, and strong observability | High-traffic services, risky changes, and ML model updates |
-| Rings and waves | Depends on the underlying mechanism; no fixed capacity overhead | Current ring or wave; pause, restore, or disable the affected cohort | Creates explicit risk checkpoints, but slows delivery and prolongs version skew | Enterprise, regulated, or heterogeneous user and device populations |
-| Regional or tenant rollout | Depends on the underlying mechanism; isolation may require spare capacity | Current region or tenant cohort; isolate, disable, or roll it back | Contains failures within meaningful boundaries, but cohorts may differ in traffic, dependencies, and configuration | Multi-region or multi-tenant systems needing isolation |
-| A/B testing | No inherent availability impact; low runtime plus experimentation and analytics overhead | Variant cohort, with potentially broader shared dependencies; return users to control | Measures causal outcomes, but requires stable assignment, sufficient samples, and statistical discipline | Product experiments, UI or workflow variants, and business-metric optimization |
-| Progressive delivery | Depends on the composed mechanisms; adds delivery-platform overhead | Current stage; automatically pause, disable, roll back, or roll forward | Standardizes gradual evidence and recovery, but requires mature controls, automation, and ownership | Teams repeatedly delivering high-risk changes at scale |
-
-### Recreate
-
-Primarily a deployment replacement strategy: stop the old runtime targets before starting the new version. It is simple, but it normally couples deployment with an interruption and immediate release of the running version.
-
-### Rolling deployment
-
-A common composition of runtime replacement, instance batches, health gates, and a pause or rollback policy.
-
-### Blue-green
-
-Primarily a deployment topology: old and new versions run in separate environments. Traffic routing and rollout progression remain separate choices. An immediate cutover can still expose all traffic at once.
-
-### Feature flags
-
-Primarily a release and exposure control. A flag can support an immediate release, percentage rollout, tenant rollout, experimentation, or a kill switch.
-
-### Dark launch
-
-Runs deployed behavior under production conditions while withholding it from the general audience. It may use internal access, a hidden flag, or a routing rule, and it does not necessarily duplicate all request processing.
-
-### Shadow validation
-
-Copies production requests to a new workload and discards its output. Side effects must be isolated or suppressed. Compute cost grows with the share of traffic being mirrored.
-
-### Canary
-
-Primarily a rollout policy: begin with a small cohort, evaluate evidence, and expand. The cohort may consist of instances, traffic, users, tenants, or regions. Canary primarily asks whether a change is safe enough to expand.
-
-### Rings, waves, regions, and tenants
-
-Ways to choose and order rollout cohorts according to risk, geography, customer boundaries, or operational isolation.
-
-### A/B testing
-
-Assigns comparable user cohorts to different released variants to measure product or business outcomes. Unlike canary, which primarily asks whether expansion is safe, A/B testing asks which variant performs better.
-
-### Progressive delivery
-
-An umbrella approach that combines gradual rollout, observability, promotion gates, and automated safety actions across deployment and release.
-
-## Building a Complete Delivery Plan
-
-Use the flow as a planning order, not a required execution timeline. Start by choosing the deployment lane, the release lane, or both. Each lane has its own progression; when both states change, choose how they are coordinated. Canary deployment appears in the deployment lane, canary release appears in the release lane, and a lockstep canary combines them.
-
-<pre class="mermaid decision-flow">
-flowchart TB
-  accTitle: Building a complete delivery plan
-  accDescr: A seven-stage planning flow for identifying deployment and release state changes, planning each transition, coordinating them, validating in production, choosing evidence and recovery, and deciding whether to automate progressive delivery.
-
-  Start([Software change]) --> State(["1 · Which states change?<br/>Choose one or both lanes"])
-
-  State -->|Deployment state| DTarget
-  State -->|Release state| RTarget
-
-  %% Mermaid renders sibling subgraphs right-to-left, so declare release first.
-  subgraph ReleaseLane["2B · Release lane"]
-    direction TB
-    RTarget["What availability changes?<br/>capability · audience · region · status"]
-    RTarget --> RControl["Which release control?<br/>deployment-coupled · flag · routing · entitlement"]
-    RControl --> RProgress["How should release progress?<br/>one step · percentage · canary release · rings · tenants · regions"]
-  end
-
-  subgraph DeploymentLane["2A · Deployment lane"]
-    direction TB
-    DTarget["What runtime target changes?<br/>artifact · configuration · schema · model"]
-    DTarget --> DApproach["Which deployment approach?<br/>recreate · rolling · blue-green"]
-    DApproach --> DProgress["How should deployment progress?<br/>one step · canary deployment · batches · rings · regions"]
-  end
-
-  DProgress --> Coordinate(["3 · If both states change,<br/>choose coordination"])
-  RProgress --> Coordinate
-
-  Coordinate -->|One state only| Single["No coordination needed"]
-  Coordinate -->|Deploy, then release| Sequential["Sequential"]
-  Coordinate -->|Same cohort together| Lockstep["Lockstep"]
-  Coordinate -->|Deployment leads release| Overlap["Pipelined or<br/>partially coupled"]
-
-  Single --> Validate(["4 · Pre-release production validation?"])
-  Sequential --> Validate
-  Lockstep --> Validate
-  Overlap --> Validate
-
-  Validate -->|Not needed| NoValidation["Continue"]
-  Validate -->|Run hidden behavior| Dark["Dark launch"]
-  Validate -->|Compare real requests| Shadow["Shadow validation"]
-
-  NoValidation --> Evidence["5 · Promotion evidence<br/>Safety baseline: health and SLO gates<br/>Add approval, time, or business metrics as needed<br/>Add A/B testing for comparative outcomes"]
-  Dark --> Evidence
-  Shadow --> Evidence
-
-  Evidence --> Recovery["6 · Failure action<br/>Pause · Disable · Roll back · Roll forward"]
-  Recovery --> Automate(["7 · For staged transitions, can progression<br/>and recovery be automated reliably?"])
-
-  Automate -->|No staged transition| ImmediatePlan["Immediate delivery plan"]
-  Automate -->|Not yet| Manual["Explicit staged plan<br/>with manual gates"]
-  Automate -->|Yes| Progressive["Progressive delivery"]
-</pre>
-
-## How the Patterns Compose
-
-The patterns above do not all occupy the same layer. A complete delivery plan normally combines choices from several layers.
-
-### Composition rules
-
-1. **Choose a primary deployment approach.** Recreate, rolling, and blue-green are usually alternatives at the same deployment boundary, although they may be nested at different boundaries.
-2. **Choose a release control.** A feature flag, traffic router, entitlement, or no separate control determines whether deployment and release can happen independently.
-3. **Choose a rollout policy for each transition.** Deployment and release may each be immediate, canary, percentage-based, ring-based, regional, or tenant-based.
-4. **Add promotion gates and recovery.** Health checks, SLOs, product metrics, approval, pause, disable, rollback, and roll forward complete the operational plan.
-5. **Optionally add pre-release validation.** Dark launch and shadow validation provide evidence before visible release.
-6. **Treat progressive delivery as the umbrella.** It combines gradual progression, evidence, and automated safety actions rather than acting as one more peer pattern.
-
-The following plans are examples of composition, not standardized bundles that every system should adopt.
-
-### 1. Simple low-risk delivery
-
-```text
-Recreate deployment
-+ immediate release
-+ smoke test
-+ redeploy the previous version on failure
-```
-
-Use when simplicity matters more than downtime or gradual risk reduction.
-
-### 2. Standard rolling service update
-
-```text
-Immutable artifact
-+ rolling deployment
-+ readiness and SLO gates
-+ pause or roll forward
-+ no separate release change
-```
-
-Use for compatible backend updates or internal changes that do not introduce new customer availability.
-
-### 3. Deploy first, release progressively
-
-```text
-Rolling or blue-green deployment
-+ feature flag off
-+ runtime validation
-+ internal users
-+ percentage or tenant rollout
-+ technical and product gates
-+ disable the flag on failure
-```
-
-This is a representative hosted SaaS plan. Deployment and release are intentionally separated so runtime risk and product risk can be evaluated independently.
-
-### 4. Coupled canary delivery
-
-```text
-Canary deployment
-+ weighted traffic routing
-+ matching user exposure
-+ SLO gates
-+ expand or roll back
-```
-
-Deployment and release move together. This shortens the delivery timeline but makes failures harder to attribute because both states change at once.
-
-### 5. Shadow validation followed by release
-
-```text
-Shadow workload
-+ mirrored production traffic
-+ output comparison
-+ canary deployment
-+ feature or traffic rollout
-```
-
-Use for risky backend rewrites, data pipelines, or ML models. It provides stronger production evidence at the cost of additional infrastructure and operational effort.
-
-### 6. Pipelined regional delivery
-
-```text
-Deploy Region A
-+ validate
-+ release Region A while deploying Region B
-+ repeat
-+ regional gates and rollback
-```
-
-Use for large multi-region systems where deployment should remain one stage ahead of release.
+## Key Takeaways
+
+- **Deployment changes runtime state.**
+- **Release changes availability.**
+- **Rollout controls how deployment or release progresses over time.**
+- **Named patterns operate at different layers and answer different parts of a delivery plan.**
+- **A complete delivery plan usually composes multiple patterns.**
+- **Safety depends on compatibility, evidence, and recovery—not on a pattern name alone.**

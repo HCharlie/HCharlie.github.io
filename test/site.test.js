@@ -12,8 +12,8 @@ test("software delivery patterns are generated and linked from the series", asyn
 
   assert.match(patterns, /href="\/patterns\/software-delivery\/"/);
   assert.match(delivery, /Deployment, Release, and Rollout for Hosted Software/);
-  assert.match(delivery, /Pattern map/);
-  assert.match(delivery, /Operational comparison/);
+  assert.match(delivery, /Pattern Map/);
+  assert.match(delivery, /Operational Trade-offs/);
   assert.match(delivery, /Building a Complete Delivery Plan/);
   assert.match(delivery, /class="[^"]*\bmermaid\b[^"]*"/);
   assert.match(delivery, /mermaid@11\.16\.1/);
@@ -43,6 +43,26 @@ test("software delivery patterns are generated and linked from the series", asyn
   }
   assert.match(delivery, /typical tendencies, not guarantees/);
   assert.equal(delivery.match(/<table>/g)?.length, 2);
+
+  const narrativeOrder = [
+    "How the Three Concepts Relate",
+    "From Concepts to Delivery Patterns",
+    "Pattern Map",
+    "Operational Trade-offs",
+    "Choosing a Delivery Plan",
+    "Worked Delivery Plans",
+    "Reference: State-Change Combinations",
+    "Key Takeaways",
+  ];
+
+  let previousSection = -1;
+  for (const section of narrativeOrder) {
+    const position = delivery.indexOf(section);
+    assert.ok(position > previousSection, `${section} should follow the preceding narrative section`);
+    previousSection = position;
+  }
+  assert.doesNotMatch(delivery, />The Composable Model/);
+  assert.doesNotMatch(delivery, />How the Patterns Compose/);
 
   const patternOrder = [
     "Recreate",
