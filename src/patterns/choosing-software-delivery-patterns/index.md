@@ -84,7 +84,7 @@ The patterns become easier to choose when grouped by the decision they support.
 A practical planning order is short:
 
 <pre class="mermaid delivery-flow">
-flowchart LR
+flowchart TB
   A[Runtime] --> B[Availability]
   B --> C[Validation]
   C --> D[Progression]
