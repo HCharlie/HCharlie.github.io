@@ -19,8 +19,8 @@ flowchart TD
     HPC["High-Performance Computing (Planned)"]
     Languages["Programming Languages(Python, Rust, Go, C/C++)"]
     Reliability["Reliability Patterns (Published)"]
-    FeatureFlags["Feature Flags (WIP)"]
-    SDLC["SDLC Overview (Planned)"]
+    DeliveryPatterns["Delivery Patterns (Published)"]
+    SDLC["SDLC Overview (Next)"]
     ML["ML Project Lifecycle (Planned)"]
     FeatureEngineering["Feature Engineering (Later)"]
     Training["Training (Later)"]
@@ -42,7 +42,7 @@ flowchart TD
     SystemsHPC --> HPC
     Site --> Languages
     Patterns --> Reliability
-    Patterns --> FeatureFlags
+    Patterns --> DeliveryPatterns
     Lifecycle --> SDLC
     Lifecycle --> ML
     Tools --> DevTools["Dev Tools (Planned)"]
