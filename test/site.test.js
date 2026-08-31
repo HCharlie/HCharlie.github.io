@@ -38,22 +38,26 @@ test("hosted delivery patterns form a short narrative companion", async () => {
   assert.match(choosing, /href="\/patterns\/software-delivery\/"/);
   assert.match(choosing, /Choosing Hosted Software Delivery Patterns/);
 
-  for (const pattern of [
+  const patternHeadings = [
     "Recreate",
-    "Rolling deployment",
-    "Blue-green",
-    "Feature flags",
-    "Dark launch",
-    "Shadow validation",
+    "Rolling Deployment",
+    "Blue-Green",
+    "Feature Flags",
+    "Dark Launch",
+    "Shadow Validation",
     "Canary",
-    "Rings",
-    "A/B testing",
-    "Progressive delivery",
-  ]) {
-    assert.match(choosing, new RegExp(pattern, "i"));
+    "Rings, Waves, Regions, and Tenants",
+    "A/B Testing",
+    "Progressive Delivery",
+  ];
+  let previousHeading = -1;
+  for (const pattern of patternHeadings) {
+    const position = choosing.indexOf(`<h3>${pattern}</h3>`);
+    assert.ok(position > previousHeading, `${pattern} should be introduced as a pattern heading`);
+    previousHeading = position;
   }
 
-  assert.equal(choosing.match(/<table>/g)?.length, 1);
+  assert.equal(choosing.match(/<table>/g)?.length ?? 0, 0);
   const flow = choosing.match(/<pre class="mermaid delivery-flow">([\s\S]*?)<\/pre>/)?.[1] ?? "";
   for (const stage of ["Runtime", "Availability", "Validation", "Progression", "Evidence and recovery"]) {
     assert.match(flow, new RegExp(stage));

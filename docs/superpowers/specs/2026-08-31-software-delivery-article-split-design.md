@@ -101,9 +101,9 @@ The scenario is a narrative thread, not a detailed case study.
 7. Introduce progressive delivery as automation around stages, evidence, promotion, and recovery.
 8. Summarize how the choices compose into one delivery plan.
 
-### Compact Pattern Guide
+### Pattern Introductions
 
-Use one small table grouped by purpose rather than one row per named pattern. Expected groups:
+Group patterns by the delivery step they support:
 
 - Runtime replacement
 - Release control
@@ -112,7 +112,7 @@ Use one small table grouped by purpose rather than one row per named pattern. Ex
 - Experimentation
 - Delivery automation
 
-The table should answer three questions only: what decision is being made, which patterns apply, and what the reader should remember.
+Give every pattern a named level-three heading and a short introduction, following the scannable style of the Reliability Patterns article. Keep the running scenario between groups so the page remains a connected narrative rather than a glossary. Do not add a summary table that repeats these introductions.
 
 ### Compact Decision Flow
 
@@ -159,13 +159,13 @@ Automated checks will verify:
 - The Patterns page links to both routes in the intended order.
 - The articles link to each other.
 - Article 1 does not contain the removed reference sections.
-- Article 2 contains the compact pattern groups and Mermaid flow.
+- Article 2 contains the named pattern introductions and Mermaid flow.
 - The generated pages preserve the site’s existing content and routes.
 
 Visual review will verify:
 
 - Both pages have comfortable reading length and section rhythm.
-- The compact table remains usable on mobile.
+- The named pattern sections remain easy to scan on mobile.
 - The Mermaid flow renders and does not cause page-level overflow.
 - No material from unrelated About/CV or Working Principles work enters the commit.
 
