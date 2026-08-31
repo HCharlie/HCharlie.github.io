@@ -73,6 +73,26 @@ test("hosted delivery patterns form a short narrative companion", async () => {
   assert.doesNotMatch(choosing, /Operational Trade-offs/);
 });
 
+test("SDLC overview presents five practical lifecycle phases", async () => {
+  const sdlc = await readFile(site("sdlc/index.html"), "utf8");
+
+  assert.match(sdlc, /Software Development Life Cycle/);
+  const phases = ["Define", "Develop", "Deliver", "Operate", "Retire"];
+  let previousPhase = -1;
+  for (const phase of phases) {
+    const position = sdlc.indexOf(`<h2>${phase}</h2>`);
+    assert.ok(position > previousPhase, `${phase} should follow the preceding SDLC phase`);
+    previousPhase = position;
+  }
+
+  for (const tool of ["Google Docs", "Git", "Docker", "Kubernetes", "OpenTelemetry", "PagerDuty"]) {
+    assert.match(sdlc, new RegExp(tool));
+  }
+  assert.match(sdlc, /href="\/patterns\/software-delivery\/"/);
+  assert.equal(sdlc.match(/<table>/g)?.length ?? 0, 0);
+  assert.doesNotMatch(sdlc, /class="[^\"]*\bmermaid\b[^\"]*"/);
+});
+
 test("generated site preserves routes, content, links, Mermaid, and exclusions", async () => {
   const [home, patterns, reliability, roadmap, asset] = await Promise.all([
     readFile(site("index.html"), "utf8"),
@@ -93,7 +113,9 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.match(reliability, /href="\/patterns\/"/);
   assert.match(roadmap, /This is a living map of what I’m building for this site/);
   assert.match(roadmap, /Delivery Patterns \(Published\)/);
-  assert.match(roadmap, /SDLC Overview \(Next\)/);
+  assert.match(roadmap, /SDLC Overview \(Published\)/);
+  assert.match(roadmap, /href="\/sdlc\/"/);
+  assert.doesNotMatch(roadmap, /SDLC Overview \(Next\)/);
   assert.match(roadmap, /Sizing Systems \(Planned\)/);
   assert.doesNotMatch(roadmap, /Feature Flags \(WIP\)/);
 

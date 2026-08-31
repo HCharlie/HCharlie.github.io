@@ -21,7 +21,7 @@ flowchart TD
     Languages["Programming Languages(Python, Rust, Go, C/C++)"]
     Reliability["Reliability Patterns (Published)"]
     DeliveryPatterns["Delivery Patterns (Published)"]
-    SDLC["SDLC Overview (Next)"]
+    SDLC["SDLC Overview (Published)"]
     ML["ML Project Lifecycle (Planned)"]
     FeatureEngineering["Feature Engineering (Later)"]
     Training["Training (Later)"]
@@ -60,5 +60,7 @@ flowchart TD
     PostTraining --> FineTuning
     FineTuning --> LoRA
 </pre>
+
+Current focus: [Software Development Life Cycle](/sdlc/).
 
 The roadmap records direction, not deadlines. I’ll deepen each branch as I publish the work.
