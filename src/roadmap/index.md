@@ -15,6 +15,7 @@ flowchart TD
     Lifecycle["SDLC &amp; ML Project Lifecycle"]
     Tools["Dev Tools"]
     SystemsHPC["Systems &amp; HPC"]
+    SizingSystems["Sizing Systems (Planned)"]
     LinuxSystems["Linux Systems (Planned)"]
     HPC["High-Performance Computing (Planned)"]
     Languages["Programming Languages(Python, Rust, Go, C/C++)"]
@@ -38,6 +39,7 @@ flowchart TD
     Site --> Lifecycle
     Site --> Tools
     Site --> SystemsHPC
+    Site --> SizingSystems
     SystemsHPC --> LinuxSystems
     SystemsHPC --> HPC
     Site --> Languages

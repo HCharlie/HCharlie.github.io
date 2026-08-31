@@ -94,6 +94,7 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.match(roadmap, /This is a living map of what I’m building for this site/);
   assert.match(roadmap, /Delivery Patterns \(Published\)/);
   assert.match(roadmap, /SDLC Overview \(Next\)/);
+  assert.match(roadmap, /Sizing Systems \(Planned\)/);
   assert.doesNotMatch(roadmap, /Feature Flags \(WIP\)/);
 
   const mermaidUrl = "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
