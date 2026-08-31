@@ -2,4 +2,5 @@
 _site/
 node_modules/
 .agents/
+/.superpowers/
 skills-lock.json
