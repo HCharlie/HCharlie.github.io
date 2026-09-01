@@ -73,24 +73,33 @@ test("hosted delivery patterns form a short narrative companion", async () => {
   assert.doesNotMatch(choosing, /Operational Trade-offs/);
 });
 
-test("SDLC overview presents five practical lifecycle phases", async () => {
-  const sdlc = await readFile(site("sdlc/index.html"), "utf8");
+test("SDLC series links to a practical five-phase overview", async () => {
+  const [series, overview] = await Promise.all([
+    readFile(site("sdlc/index.html"), "utf8"),
+    readFile(site("sdlc/overview/index.html"), "utf8"),
+  ]);
 
-  assert.match(sdlc, /Software Development Life Cycle/);
+  assert.match(series, /<h2>Published<\/h2>/);
+  assert.match(series, /href="\/sdlc\/overview\/"/);
+  assert.match(series, /<h2>Coming gradually<\/h2>/);
+  assert.doesNotMatch(series, /<h2>In progress<\/h2>/);
+  assert.match(overview, /SDLC Overview/);
+
   const phases = ["Define", "Develop", "Deliver", "Operate", "Retire"];
   let previousPhase = -1;
   for (const phase of phases) {
-    const position = sdlc.indexOf(`<h2>${phase}</h2>`);
+    const position = overview.indexOf(`<h2>${phase}</h2>`);
     assert.ok(position > previousPhase, `${phase} should follow the preceding SDLC phase`);
     previousPhase = position;
   }
 
   for (const tool of ["Google Docs", "Git", "Docker", "Kubernetes", "OpenTelemetry", "PagerDuty"]) {
-    assert.match(sdlc, new RegExp(tool));
+    assert.match(overview, new RegExp(tool));
   }
-  assert.match(sdlc, /href="\/patterns\/software-delivery\/"/);
-  assert.equal(sdlc.match(/<table>/g)?.length ?? 0, 0);
-  assert.doesNotMatch(sdlc, /class="[^\"]*\bmermaid\b[^\"]*"/);
+  assert.match(overview, /href="\/sdlc\/"/);
+  assert.match(overview, /href="\/patterns\/software-delivery\/"/);
+  assert.equal(overview.match(/<table>/g)?.length ?? 0, 0);
+  assert.doesNotMatch(overview, /class="[^\"]*\bmermaid\b[^\"]*"/);
 });
 
 test("generated site preserves routes, content, links, Mermaid, and exclusions", async () => {
@@ -108,7 +117,7 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   const homepagePatterns = home.indexOf('<a class="row" href="/patterns/">');
   assert.ok(homepageSdlc >= 0);
   assert.ok(homepagePatterns > homepageSdlc);
-  assert.match(home, /<a class="row" href="\/sdlc\/">[\s\S]*?<h3>SDLC<\/h3>[\s\S]*?<span class="meta">Published article<\/span>/);
+  assert.match(home, /<a class="row" href="\/sdlc\/">[\s\S]*?<h3>SDLC<\/h3>[\s\S]*?<span class="meta">Published series<\/span>/);
   assert.match(home, /href="\/roadmap\/"/);
   assert.match(home, /src="\/assets\/changli\.jpg"/);
   assert.match(patterns, /Software patterns are compressed experience/);
