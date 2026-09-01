@@ -7,13 +7,30 @@
 
 Publish a short, general introduction to the Software Development Life Cycle. It should be easy to read, systematic enough to remember, and written in the natural tone of an experienced engineer explaining the subject plainly.
 
-## Page
+## Pages
+
+### Series Landing
 
 - Source: `src/sdlc/index.md`
 - Route: `/sdlc/`
 - Title: **Software Development Life Cycle**
-- Eyebrow: **SDLC · Overview**
+- Purpose: introduce the series and list its articles
+
+The landing page contains:
+
+- **Published:** `SDLC Overview`, linking to `/sdlc/overview/`
+- **Coming gradually:** deeper notes on individual lifecycle phases
+
+Do not add an **In progress** section until a specific next article exists.
+
+### Overview Article
+
+- Source: `src/sdlc/overview/index.md`
+- Route: `/sdlc/overview/`
+- Title: **SDLC Overview**
+- Eyebrow: **Software Development Life Cycle**
 - Length: approximately 600–800 words
+- Navigation: link back to the SDLC series
 
 ## Model
 
@@ -74,22 +91,22 @@ Cover user and data migration, traffic removal, archival, dependency cleanup, an
 - Do not explain Agile, Scrum, Waterfall, DevOps, detailed testing disciplines, or delivery patterns in depth.
 - End by noting that real work moves backward and forward between phases, and operational evidence often starts the next cycle.
 
-## Roadmap
+## Navigation and Roadmap
 
-After publication:
-
-- Change `SDLC Overview (Next)` to `SDLC Overview (Published)` in `src/roadmap/index.md`.
-- Add a visible Markdown link to `/sdlc/` near the roadmap.
+- Keep the homepage SDLC card linked to `/sdlc/` and label it **Published series**.
+- Keep the roadmap SDLC node and visible Markdown link pointed at `/sdlc/`.
+- Preserve `SDLC Overview (Published)` in the roadmap.
 - Preserve unrelated local Working Principles work.
-
-No lifecycle landing page or new navigation item is needed yet.
+- Do not add a new top-level navigation item.
 
 ## Verification
 
-- `/sdlc/` is generated.
-- The five phase headings appear in order.
+- `/sdlc/` is generated as the series landing page.
+- `/sdlc/overview/` is generated as the overview article.
+- The landing page links to the overview and has no empty In progress section.
+- The five overview phase headings appear in order.
 - The page includes representative tools without becoming a catalogue.
 - Deliver links to Delivery Patterns Part 1.
-- The roadmap marks and links the published article.
-- The article is approximately 600–800 words and remains readable on desktop and mobile.
+- The homepage and roadmap link to the series landing page.
+- The overview is approximately 600–800 words and both pages remain readable on desktop and mobile.
 - Existing routes and unrelated content remain intact.
