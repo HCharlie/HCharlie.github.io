@@ -21,7 +21,7 @@ Each phase has a different purpose, produces different evidence, and tends to in
 
 Before writing code, decide what should be built and why. This includes understanding the problem, checking whether a solution is feasible, setting boundaries, gathering requirements, and sketching an initial design. A useful definition also records constraints: time, cost, security, compatibility, and the people affected by the change.
 
-The tools are usually simple. Teams write and review ideas in Google Docs or Notion, track decisions and work in Jira or Linear, and explore workflows with Figma, Miro, or another diagramming tool. The specific product matters less than having one place where people can see the problem, assumptions, and decisions.
+The tools are usually simple. Teams write and review ideas in shared documents such as Google Docs, track decisions and work in Jira or Linear, and sketch workflows with Excalidraw, Miro, or another diagramming tool. The specific product matters less than having one place where people can see the problem, assumptions, and decisions.
 
 The result is not a perfect specification. It is enough shared understanding to begin development without every person solving a different problem.
 
@@ -37,7 +37,7 @@ The output is more than code that runs on one machine. It should be reviewed, in
 
 Delivery makes a verified version available for use. Depending on the software, that may involve packaging, releasing, distributing, installing, deploying, migrating data, or gradually exposing new behavior.
 
-CI/CD tools such as GitHub Actions or GitLab CI automate repeatable steps. Docker or another OCI-compatible tool packages software as container images; an artifact registry stores those images. Terraform can describe infrastructure, while Kubernetes schedules and operates containerized workloads and Helm packages Kubernetes configuration. These are common choices for hosted software, not requirements for every project. Libraries use package repositories, mobile applications use app stores, and desktop software may use installers.
+CI/CD systems such as GitHub Actions or Buildkite automate repeatable delivery steps. Docker or another OCI-compatible tool packages software as container images; an artifact registry stores those images. Terraform can describe infrastructure, while Kubernetes schedules and operates containerized workloads and Helm packages Kubernetes configuration. These are common choices for hosted software, not requirements for every project. Libraries use package repositories, mobile applications use app stores, and desktop software may use installers.
 
 Deployment is an activity, not a synonym for all delivery work. Release and rollout may be separate decisions. I cover that distinction in [Delivery Patterns, Part 1: Deployment, Release, and Rollout](/patterns/software-delivery/).
 

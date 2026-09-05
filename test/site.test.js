@@ -93,8 +93,11 @@ test("SDLC series links to a practical five-phase overview", async () => {
     previousPhase = position;
   }
 
-  for (const tool of ["Google Docs", "Git", "Docker", "Kubernetes", "OpenTelemetry", "PagerDuty"]) {
+  for (const tool of ["Google Docs", "Excalidraw", "Git", "Buildkite", "Docker", "Kubernetes", "OpenTelemetry", "PagerDuty"]) {
     assert.match(overview, new RegExp(tool));
+  }
+  for (const removedTool of ["Notion", "Figma", "GitLab CI"]) {
+    assert.doesNotMatch(overview, new RegExp(removedTool));
   }
   assert.match(overview, /href="\/sdlc\/"/);
   assert.match(overview, /href="\/patterns\/software-delivery\/"/);

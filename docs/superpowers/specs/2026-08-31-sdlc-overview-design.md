@@ -57,7 +57,7 @@ Do not repeat rigid labels such as “Purpose,” “Tools,” and “Output” 
 
 ### Define
 
-Cover problem definition, feasibility, scope, requirements, and initial design. Mention documents, issue trackers, diagrams, and prototypes, with examples such as Google Docs, Jira or Linear, and Figma or Miro.
+Cover problem definition, feasibility, scope, requirements, and initial design. Mention documents, issue trackers, diagrams, and prototypes, with examples such as Google Docs, Jira or Linear, and Excalidraw or Miro.
 
 ### Develop
 
