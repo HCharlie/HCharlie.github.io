@@ -181,7 +181,7 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.ok(homepageSdlc >= 0);
   assert.ok(homepagePatterns > homepageSdlc);
   assert.match(home, /<a class="row" href="\/sdlc\/">[\s\S]*?<h3>SDLC<\/h3>[\s\S]*?<span class="meta">Published series<\/span>/);
-  assert.match(home, /<a class="row" href="\/ml\/">[\s\S]*?<h3>Machine Learning<\/h3>[\s\S]*?<span class="meta">Published collection<\/span>/);
+  assert.match(home, /<a class="row" href="\/ml\/">[\s\S]*?<h3>Machine Learning<\/h3>[\s\S]*?<span class="meta">Published series<\/span>/);
   assert.match(home, /href="\/roadmap\/"/);
   assert.match(home, /src="\/assets\/changli\.jpg"/);
   assert.match(patterns, /Software patterns are compressed experience/);

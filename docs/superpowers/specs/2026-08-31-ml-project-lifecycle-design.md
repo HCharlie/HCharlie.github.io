@@ -10,12 +10,12 @@ The central idea is:
 
 ## Pages
 
-### Machine Learning Collection
+### Machine Learning Series
 
 - Source: `src/ml/index.md`
 - Route: `/ml/`
 - Title: **Machine Learning**
-- Purpose: introduce the collection and list published ML articles
+- Purpose: introduce the series and list published ML articles
 
 The landing page contains:
 
@@ -109,7 +109,7 @@ Return to the central idea: the lifecycle is familiar, but the unit of change in
 
 ## Navigation and Roadmap
 
-- Change the homepage ML card title to **Machine Learning**, link it to `/ml/`, and label it **Published collection**.
+- Change the homepage ML card title to **Machine Learning**, link it to `/ml/`, and label it **Published series**.
 - Preserve SDLC above Commonly Used Patterns and ML below them.
 - Change the roadmap node to `ML Project Lifecycle (Published)` and link it to `/ml/`.
 - Change the roadmap current focus to the ML series or lifecycle article.
