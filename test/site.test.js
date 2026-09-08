@@ -152,6 +152,7 @@ test("ML series explains how ML expands the familiar SDLC", async () => {
     "Deliver them together:",
     "application code",
     "model learned from data",
+    "That one addition changes every phase of the lifecycle",
     "model artifact",
     "operationally healthy while its model",
   ]) {

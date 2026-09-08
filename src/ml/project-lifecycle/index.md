@@ -36,7 +36,7 @@ The simplest way I think about the difference is:
 + model learned from data
 ```
 
-Training configuration, evaluation evidence, and data quality still matter, but their roles become clearer in the lifecycle phases below.
+That one addition changes every phase of the lifecycle.
 
 ## Define
 

@@ -77,7 +77,7 @@ Include a compact diff:
 + model learned from data
 ```
 
-Leave training configuration, evaluation evidence, and data quality to the lifecycle phases where their roles are clearer.
+Transition into the phase-by-phase comparison with: “That one addition changes every phase of the lifecycle.”
 
 ### Walk through the SDLC as a diff
 
