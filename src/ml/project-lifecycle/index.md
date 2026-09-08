@@ -23,31 +23,20 @@ The difference is the set of artifacts and evidence moving through it.
 
 ## Expand the unit of change
 
-A conventional software change often starts with code and configuration and ends with a deployable software artifact:
+An ML system is still a software system. What changes is that part of its behavior comes from a trained model. The application and model usually have separate build paths, produce separate artifacts, and must remain compatible when delivered together.
 
-```text
-Software system:
-Code + configuration
-  → software artifact
-```
-
-An ML change adds a build-like process that produces a model, then combines that model with application code:
-
-```text
-ML system:
-Code + data + training configuration
-  → model artifact
-Model + application code
-  → ML system
-```
+- **Build software:** application code and configuration produce the application artifact.
+- **Train the model:** training code, training and evaluation data, and configuration produce the model artifact.
+- **Deliver the system:** compatible application and model artifacts run together as an ML-enabled software system.
 
 Traditional software uses data too. The important difference is that training and evaluation data directly shape learned behavior, while the trained model becomes another versioned artifact. The practical diff looks like this:
 
 ```diff
-  code
-  configuration
+  application code and configuration
+  application artifact
 + training and evaluation data
-+ model artifacts
++ training configuration
++ model artifact
 + data and model quality evidence
 ```
 

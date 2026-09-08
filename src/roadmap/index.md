@@ -48,7 +48,7 @@ flowchart TD
     Lifecycle --> SDLC
     click SDLC "/sdlc/" "Read the SDLC overview"
     Lifecycle --> ML
-    click ML "/ml/" "Read the ML series"
+    click ML "/ml/" "Explore Machine Learning"
     Tools --> DevTools["Dev Tools (Planned)"]
     ML --> FeatureEngineering
     ML --> Training

@@ -5,7 +5,7 @@ eyebrow: From experiments to working systems
 permalink: /ml/
 ---
 
-Machine learning is more than choosing a model. This series looks at the surrounding engineering work: defining useful behavior, building with data, delivering models, and learning from production.
+Machine learning is more than choosing a model. These notes look at the surrounding engineering work: defining useful behavior, building with data, delivering models, and learning from production.
 
 ## Published
 

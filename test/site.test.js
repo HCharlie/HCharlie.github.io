@@ -146,14 +146,18 @@ test("ML series explains how ML expands the familiar SDLC", async () => {
   }
 
   for (const idea of [
-    "Software system:",
-    "ML system:",
+    "An ML system is still a software system",
+    "Build software:",
+    "Train the model:",
+    "Deliver the system:",
     "training and evaluation data",
-    "model artifacts",
+    "model artifact",
     "operationally healthy while its model",
   ]) {
     assert.match(lifecycle, new RegExp(idea));
   }
+  assert.doesNotMatch(lifecycle, /Software system:\s*[\s\S]*?→ software artifact/);
+  assert.doesNotMatch(lifecycle, /ML system:\s*[\s\S]*?→ model artifact/);
   assert.match(lifecycle, /href="\/ml\/"/);
   assert.equal(lifecycle.match(/<table>/g)?.length ?? 0, 0);
   assert.doesNotMatch(lifecycle, /class="[^\"]*\bmermaid\b[^\"]*"/);
@@ -175,7 +179,7 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.ok(homepageSdlc >= 0);
   assert.ok(homepagePatterns > homepageSdlc);
   assert.match(home, /<a class="row" href="\/sdlc\/">[\s\S]*?<h3>SDLC<\/h3>[\s\S]*?<span class="meta">Published series<\/span>/);
-  assert.match(home, /<a class="row" href="\/ml\/">[\s\S]*?<h3>ML Series<\/h3>[\s\S]*?<span class="meta">Published series<\/span>/);
+  assert.match(home, /<a class="row" href="\/ml\/">[\s\S]*?<h3>Machine Learning<\/h3>[\s\S]*?<span class="meta">Published collection<\/span>/);
   assert.match(home, /href="\/roadmap\/"/);
   assert.match(home, /src="\/assets\/changli\.jpg"/);
   assert.match(patterns, /Software patterns are compressed experience/);

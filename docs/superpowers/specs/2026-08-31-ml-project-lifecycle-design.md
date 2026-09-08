@@ -10,12 +10,12 @@ The central idea is:
 
 ## Pages
 
-### ML Series Landing
+### Machine Learning Collection
 
 - Source: `src/ml/index.md`
 - Route: `/ml/`
 - Title: **Machine Learning**
-- Purpose: introduce the series and list published ML articles
+- Purpose: introduce the collection and list published ML articles
 
 The landing page contains:
 
@@ -31,7 +31,7 @@ Do not add an **In progress** section or an exhaustive future catalogue.
 - Title: **ML Project Lifecycle: How ML Changes the SDLC**
 - Eyebrow: **Machine Learning · Overview**
 - Length: approximately 800–1,000 words
-- Navigation: link back to the ML series
+- Navigation: link back to Machine Learning
 
 ## Audience and Voice
 
@@ -62,26 +62,22 @@ Explain that ML keeps these phases.
 
 ### Expand the unit of change
 
-Contrast the primary artifacts:
+Clarify that an ML system remains a software system, while its application and model have separate build paths and artifacts:
 
-```text
-Software system:
-Code + configuration → software artifact
-
-ML system:
-Code + data + training configuration → model artifact
-Model + application code → ML system
-```
+- **Build software:** application code and configuration produce the application artifact.
+- **Train the model:** training code, training and evaluation data, and configuration produce the model artifact.
+- **Deliver the system:** compatible application and model artifacts run together as an ML-enabled software system.
 
 Acknowledge that traditional software also uses data. The distinction is that training and evaluation data directly shape learned behavior, while the model becomes another versioned artifact.
 
 Include a compact diff:
 
 ```diff
-  code
-  configuration
+  application code and configuration
+  application artifact
 + training and evaluation data
-+ model artifacts
++ training configuration
++ model artifact
 + data and model quality evidence
 ```
 
@@ -115,7 +111,7 @@ Return to the central idea: the lifecycle is familiar, but the unit of change in
 
 ## Navigation and Roadmap
 
-- Change the homepage ML card to a link to `/ml/` and label it **Published series**.
+- Change the homepage ML card title to **Machine Learning**, link it to `/ml/`, and label it **Published collection**.
 - Preserve SDLC above Commonly Used Patterns and ML below them.
 - Change the roadmap node to `ML Project Lifecycle (Published)` and link it to `/ml/`.
 - Change the roadmap current focus to the ML series or lifecycle article.
