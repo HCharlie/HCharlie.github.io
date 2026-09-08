@@ -22,7 +22,7 @@ flowchart TD
     Reliability["Reliability Patterns (Published)"]
     DeliveryPatterns["Delivery Patterns (Published)"]
     SDLC["SDLC Overview (Published)"]
-    ML["ML Project Lifecycle (Planned)"]
+    ML["ML Project Lifecycle (Published)"]
     FeatureEngineering["Feature Engineering (Later)"]
     Training["Training (Later)"]
     ModelMath["Model Architecture &amp; Math (Later)"]
@@ -48,6 +48,7 @@ flowchart TD
     Lifecycle --> SDLC
     click SDLC "/sdlc/" "Read the SDLC overview"
     Lifecycle --> ML
+    click ML "/ml/" "Read the ML series"
     Tools --> DevTools["Dev Tools (Planned)"]
     ML --> FeatureEngineering
     ML --> Training
@@ -62,6 +63,8 @@ flowchart TD
     FineTuning --> LoRA
 </pre>
 
-Current focus: [Software Development Life Cycle](/sdlc/).
+Current focus: [Machine Learning](/ml/).
+
+Published overviews: [Software Development Life Cycle](/sdlc/) and [ML Project Lifecycle](/ml/project-lifecycle/).
 
 The roadmap records direction, not deadlines. I’ll deepen each branch as I publish the work.

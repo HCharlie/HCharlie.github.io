@@ -126,6 +126,39 @@ test("SDLC series links to a practical five-phase overview", async () => {
   assert.doesNotMatch(overview, /class="[^\"]*\bmermaid\b[^\"]*"/);
 });
 
+test("ML series explains how ML expands the familiar SDLC", async () => {
+  const [series, lifecycle] = await Promise.all([
+    readFile(site("ml/index.html"), "utf8"),
+    readFile(site("ml/project-lifecycle/index.html"), "utf8"),
+  ]);
+
+  assert.match(series, /<h2>Published<\/h2>/);
+  assert.match(series, /href="\/ml\/project-lifecycle\/"/);
+  assert.match(series, /<h2>Coming gradually<\/h2>/);
+  assert.doesNotMatch(series, /<h2>In progress<\/h2>/);
+
+  const phases = ["Define", "Develop", "Deliver", "Operate", "Retire"];
+  let previousPhase = -1;
+  for (const phase of phases) {
+    const position = lifecycle.indexOf(`<h2>${phase}</h2>`);
+    assert.ok(position > previousPhase, `${phase} should follow the preceding ML lifecycle phase`);
+    previousPhase = position;
+  }
+
+  for (const idea of [
+    "Software system:",
+    "ML system:",
+    "training and evaluation data",
+    "model artifacts",
+    "operationally healthy while its model",
+  ]) {
+    assert.match(lifecycle, new RegExp(idea));
+  }
+  assert.match(lifecycle, /href="\/ml\/"/);
+  assert.equal(lifecycle.match(/<table>/g)?.length ?? 0, 0);
+  assert.doesNotMatch(lifecycle, /class="[^\"]*\bmermaid\b[^\"]*"/);
+});
+
 test("generated site preserves routes, content, links, Mermaid, and exclusions", async () => {
   const [home, patterns, reliability, roadmap, asset] = await Promise.all([
     readFile(site("index.html"), "utf8"),
@@ -142,6 +175,7 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.ok(homepageSdlc >= 0);
   assert.ok(homepagePatterns > homepageSdlc);
   assert.match(home, /<a class="row" href="\/sdlc\/">[\s\S]*?<h3>SDLC<\/h3>[\s\S]*?<span class="meta">Published series<\/span>/);
+  assert.match(home, /<a class="row" href="\/ml\/">[\s\S]*?<h3>ML Series<\/h3>[\s\S]*?<span class="meta">Published series<\/span>/);
   assert.match(home, /href="\/roadmap\/"/);
   assert.match(home, /src="\/assets\/changli\.jpg"/);
   assert.match(patterns, /Software patterns are compressed experience/);
@@ -153,6 +187,9 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.match(roadmap, /SDLC Overview \(Published\)/);
   assert.match(roadmap, /href="\/sdlc\/"/);
   assert.match(roadmap, /click SDLC "\/sdlc\/"/);
+  assert.match(roadmap, /ML Project Lifecycle \(Published\)/);
+  assert.match(roadmap, /click ML "\/ml\/"/);
+  assert.doesNotMatch(roadmap, /ML Project Lifecycle \(Planned\)/);
   assert.doesNotMatch(roadmap, /SDLC Overview \(Next\)/);
   assert.match(roadmap, /Sizing Systems \(Planned\)/);
   assert.doesNotMatch(roadmap, /Feature Flags \(WIP\)/);
