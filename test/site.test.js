@@ -149,8 +149,9 @@ test("ML series explains how ML expands the familiar SDLC", async () => {
     "An ML system is still a software system",
     "Build software:",
     "Train the model:",
-    "Deliver the system:",
-    "training and evaluation data",
+    "Deliver them together:",
+    "application code",
+    "model learned from data",
     "model artifact",
     "operationally healthy while its model",
   ]) {
@@ -158,6 +159,7 @@ test("ML series explains how ML expands the familiar SDLC", async () => {
   }
   assert.doesNotMatch(lifecycle, /Software system:\s*[\s\S]*?→ software artifact/);
   assert.doesNotMatch(lifecycle, /ML system:\s*[\s\S]*?→ model artifact/);
+  assert.doesNotMatch(lifecycle, /application artifact[\s\S]*?\+ training and evaluation data/);
   assert.match(lifecycle, /href="\/ml\/"/);
   assert.equal(lifecycle.match(/<table>/g)?.length ?? 0, 0);
   assert.doesNotMatch(lifecycle, /class="[^\"]*\bmermaid\b[^\"]*"/);

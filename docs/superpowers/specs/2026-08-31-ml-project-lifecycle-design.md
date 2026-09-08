@@ -64,22 +64,20 @@ Explain that ML keeps these phases.
 
 Clarify that an ML system remains a software system, while its application and model have separate build paths and artifacts:
 
-- **Build software:** application code and configuration produce the application artifact.
-- **Train the model:** training code, training and evaluation data, and configuration produce the model artifact.
-- **Deliver the system:** compatible application and model artifacts run together as an ML-enabled software system.
+- **Build software:** produce the application artifact from code and configuration.
+- **Train the model:** use code and data to produce the model artifact.
+- **Deliver them together:** run compatible application and model artifacts as one software system.
 
 Acknowledge that traditional software also uses data. The distinction is that training and evaluation data directly shape learned behavior, while the model becomes another versioned artifact.
 
 Include a compact diff:
 
 ```diff
-  application code and configuration
-  application artifact
-+ training and evaluation data
-+ training configuration
-+ model artifact
-+ data and model quality evidence
+  application code
++ model learned from data
 ```
+
+Leave training configuration, evaluation evidence, and data quality to the lifecycle phases where their roles are clearer.
 
 ### Walk through the SDLC as a diff
 

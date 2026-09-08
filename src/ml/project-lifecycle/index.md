@@ -25,22 +25,18 @@ The difference is the set of artifacts and evidence moving through it.
 
 An ML system is still a software system. What changes is that part of its behavior comes from a trained model. The application and model usually have separate build paths, produce separate artifacts, and must remain compatible when delivered together.
 
-- **Build software:** application code and configuration produce the application artifact.
-- **Train the model:** training code, training and evaluation data, and configuration produce the model artifact.
-- **Deliver the system:** compatible application and model artifacts run together as an ML-enabled software system.
+- **Build software:** produce the application artifact from code and configuration.
+- **Train the model:** use code and data to produce the model artifact.
+- **Deliver them together:** run compatible application and model artifacts as one software system.
 
-Traditional software uses data too. The important difference is that training and evaluation data directly shape learned behavior, while the trained model becomes another versioned artifact. The practical diff looks like this:
+The simplest way I think about the difference is:
 
 ```diff
-  application code and configuration
-  application artifact
-+ training and evaluation data
-+ training configuration
-+ model artifact
-+ data and model quality evidence
+  application code
++ model learned from data
 ```
 
-These additions affect every phase of the lifecycle.
+Training configuration, evaluation evidence, and data quality still matter, but their roles become clearer in the lifecycle phases below.
 
 ## Define
 
