@@ -12,11 +12,3 @@ The series capture knowledge that has become concrete enough to publish. The roa
 ## Professional background
 
 For a concise summary of my experience, education, and skills, you can [view my CV (PDF)](/assets/Changli_Han_ml_platform.pdf).
-
-<h2 id="visitor-map-title">Visitor map</h2>
-
-Visits from around the world.
-
-<div class="visitor-map">
-  <script type="text/javascript" id="mmvst_globe" src="https://mapmyvisitors.com/globe.js?d=f2mzBMYkadrCChHSxzgRG76NcFB_IYUbWilygQ7dawU"></script>
-</div>

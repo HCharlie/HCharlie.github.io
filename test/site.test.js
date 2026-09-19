@@ -4,15 +4,13 @@ import test from "node:test";
 
 const site = (path) => new URL(`../_site/${path}`, import.meta.url);
 
-test("About page displays the MapMyVisitors globe instead of the homepage", async () => {
+test("homepage and About page do not load the removed visitor widget", async () => {
   const [home, about] = await Promise.all([
     readFile(site("index.html"), "utf8"),
     readFile(site("about/index.html"), "utf8"),
   ]);
 
-  assert.doesNotMatch(home, /id="mmvst_globe"/);
-  assert.match(about, /<h2 id="visitor-map-title">Visitor map<\/h2>/);
-  assert.match(about, /<script type="text\/javascript" id="mmvst_globe" src="https:\/\/mapmyvisitors\.com\/globe\.js\?d=f2mzBMYkadrCChHSxzgRG76NcFB_IYUbWilygQ7dawU"><\/script>/);
+  assert.doesNotMatch(home + about, /mapmyvisitors|mmvst_globe|visitor-map/);
 });
 
 test("About page exposes the CV from the homepage footer", async () => {
