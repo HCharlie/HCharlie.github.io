@@ -4,6 +4,29 @@ import test from "node:test";
 
 const site = (path) => new URL(`../_site/${path}`, import.meta.url);
 
+test("About page displays the MapMyVisitors globe instead of the homepage", async () => {
+  const [home, about] = await Promise.all([
+    readFile(site("index.html"), "utf8"),
+    readFile(site("about/index.html"), "utf8"),
+  ]);
+
+  assert.doesNotMatch(home, /id="mmvst_globe"/);
+  assert.match(about, /<h2 id="visitor-map-title">Visitor map<\/h2>/);
+  assert.match(about, /<script type="text\/javascript" id="mmvst_globe" src="https:\/\/mapmyvisitors\.com\/globe\.js\?d=ru9rd2dACtbP6iZIxZurVhvOSCs9go0x23AiPui1cvw"><\/script>/);
+});
+
+test("About page exposes the CV from the homepage footer", async () => {
+  const [home, about, cv] = await Promise.all([
+    readFile(site("index.html"), "utf8"),
+    readFile(site("about/index.html"), "utf8"),
+    readFile(site("assets/Changli_Han_ml_platform.pdf")),
+  ]);
+
+  assert.match(home, /class="footer"[\s\S]*href="\/about\/"/);
+  assert.match(about, /href="\/assets\/Changli_Han_ml_platform\.pdf"/);
+  assert.ok(cv.length > 0);
+});
+
 test("deployment, release, and rollout stays focused on the mental model", async () => {
   const [patterns, delivery] = await Promise.all([
     readFile(site("patterns/index.html"), "utf8"),
