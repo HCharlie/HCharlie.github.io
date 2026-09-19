@@ -18,5 +18,5 @@ For a concise summary of my experience, education, and skills, you can [view my 
 Visits from around the world.
 
 <div class="visitor-map">
-  <script type="text/javascript" id="mmvst_globe" src="https://mapmyvisitors.com/globe.js?d=ru9rd2dACtbP6iZIxZurVhvOSCs9go0x23AiPui1cvw"></script>
+  <script type="text/javascript" id="mmvst_globe" src="https://mapmyvisitors.com/globe.js?d=cZFFsRLqaqOXcTHYJYl34Oc0b2Bg96tmEFQ-LGGS-HM"></script>
 </div>
