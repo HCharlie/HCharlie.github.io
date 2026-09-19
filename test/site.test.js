@@ -12,7 +12,7 @@ test("About page displays the MapMyVisitors globe instead of the homepage", asyn
 
   assert.doesNotMatch(home, /id="mmvst_globe"/);
   assert.match(about, /<h2 id="visitor-map-title">Visitor map<\/h2>/);
-  assert.match(about, /<script type="text\/javascript" id="mmvst_globe" src="https:\/\/mapmyvisitors\.com\/globe\.js\?d=cZFFsRLqaqOXcTHYJYl34Oc0b2Bg96tmEFQ-LGGS-HM"><\/script>/);
+  assert.match(about, /<script type="text\/javascript" id="mmvst_globe" src="https:\/\/mapmyvisitors\.com\/globe\.js\?d=f2mzBMYkadrCChHSxzgRG76NcFB_IYUbWilygQ7dawU"><\/script>/);
 });
 
 test("About page exposes the CV from the homepage footer", async () => {
