@@ -40,18 +40,26 @@ That one addition changes every phase of the lifecycle.
 
 ## Define
 
+In conventional software, this phase defines the customer need, the behavior the software should provide, and its constraints. ML keeps all of that and adds a contract around the learned behavior:
+
 ```diff
-  required behavior and constraints
-+ data feasibility
-+ statistical success criteria
-+ evaluation strategy
+  customer need
+  software behavior and constraints
++ bounded role for the model
++ viable source of learned capability
++ evaluation cases and acceptance threshold
++ fallback when the model cannot be trusted
 ```
 
-Definition still begins with the problem, scope, users, and constraints. ML adds another question: can the desired behavior be learned from the data we can obtain?
+First, bound the model's role. A vague goal such as “use ML for customer support” is not enough. A clearer definition might ask a model to propose a grounded response from a support request and account context, while a person or another rule remains responsible for the final action.
 
-Success also needs more than a functional requirement. The team needs a useful baseline, quality measures, and an evaluation strategy. Aggregate accuracy may not be enough when particular mistakes, populations, or operating conditions matter more than others.
+Next, establish a credible source of capability. If the team trains a model, that means finding suitable examples, labels, and representative data. If the team integrates a pretrained model, it means checking whether the model—combined with prompts, context, retrieval, or tools—can support the task.
 
-The result should explain not only what the system should do, but also what evidence would make a model good enough to use.
+Then define the evidence required for acceptance. Predictive systems may use error rates, calibration, and performance across important groups. Generative systems may use representative tasks and rubrics for usefulness, groundedness, and safety. Both need a baseline and a threshold for being good enough.
+
+Finally, define what happens when the model is unavailable, uncertain, or produces an unacceptable result. The software might fall back to rules, ask for more information, request human review, or refuse safely.
+
+The output of Define is therefore more than a requirement. It is a clear agreement about the model's role, the evidence needed to trust it, and the behavior of the system when that trust is not justified.
 
 ## Develop
 

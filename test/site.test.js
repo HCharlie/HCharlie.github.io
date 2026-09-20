@@ -153,6 +153,10 @@ test("ML series explains how ML expands the familiar SDLC", async () => {
     "application code",
     "model learned from data",
     "That one addition changes every phase of the lifecycle",
+    "bounded role for the model",
+    "viable source of learned capability",
+    "evaluation cases and acceptance threshold",
+    "fallback when the model cannot be trusted",
     "model artifact",
     "operationally healthy while its model",
   ]) {

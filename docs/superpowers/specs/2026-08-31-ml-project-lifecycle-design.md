@@ -83,7 +83,7 @@ Transition into the phase-by-phase comparison with: “That one addition changes
 
 Use the same five phase headings as the SDLC overview. In each phase, include a compact diff followed by a short explanation of what ML adds.
 
-- **Define:** data feasibility, statistical success criteria, and evaluation strategy
+- **Define:** preserve the customer need and software constraints, then add a bounded model role, a viable source of learned capability, evaluation cases and an acceptance threshold, and a fallback when the model cannot be trusted; distinguish trained models from integrated pretrained models and predictive criteria from generative rubrics
 - **Develop:** data preparation, training, experimentation, and model evaluation
 - **Deliver:** model artifacts, preprocessing and post-processing, and model–code compatibility
 - **Operate:** input quality, output and model quality, drift, and production feedback
