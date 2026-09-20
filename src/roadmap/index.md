@@ -4,11 +4,12 @@ title: Website Roadmap
 eyebrow: Building in public
 permalink: /roadmap/
 mermaid: true
+mermaidViewer: true
 ---
 
 This is a living map of what I’m building for this site. It starts small on purpose and will grow as each topic becomes real work.
 
-<pre class="mermaid">
+<pre class="mermaid interactive-mermaid">
 flowchart TD
     Site["Personal Website"]
     Patterns["Commonly Used Patterns"]

@@ -1,0 +1,177 @@
+.mermaid-viewer {
+  position: relative;
+  min-height: 32rem;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--panel) 88%, var(--bg) 12%);
+}
+
+.mermaid-viewer__toolbar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3.5rem;
+  padding: 0.55rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+}
+
+.mermaid-viewer__toolbar button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--panel) 88%, var(--bg) 12%);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.mermaid-viewer__toolbar button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.mermaid-viewer__toolbar button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.mermaid-viewer__hint {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.mermaid-viewer__viewport {
+  position: relative;
+  height: min(68vh, 46rem);
+  min-height: 28rem;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;
+  cursor: grab;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--muted) 30%, transparent) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.mermaid-viewer__viewport:active { cursor: grabbing; }
+
+.mermaid-viewer__diagram {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  overflow: visible;
+  text-align: initial;
+  transform-origin: center;
+}
+
+.mermaid-viewer__diagram svg {
+  display: block;
+  max-width: none !important;
+}
+
+.mermaid-viewer__inspector {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 4;
+  display: grid;
+  grid-template-rows: 1.2rem 3rem 1.5rem;
+  width: min(22rem, calc(100% - 2rem));
+  min-height: 7.2rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+  box-shadow: var(--shadow);
+}
+
+.mermaid-viewer__inspector small,
+.mermaid-viewer__inspector strong { display: block; }
+
+.mermaid-viewer__inspector small {
+  overflow: hidden;
+  color: var(--muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mermaid-viewer__inspector strong {
+  display: -webkit-box;
+  overflow: hidden;
+  align-self: center;
+  color: var(--fg);
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.mermaid-viewer__action { min-height: 1.5rem; }
+.mermaid-viewer__action a { color: var(--accent); font-weight: 700; }
+
+.mermaid-viewer svg .node,
+.mermaid-viewer svg .flowchart-link {
+  transition: opacity 180ms ease, filter 180ms ease, stroke 180ms ease, stroke-width 180ms ease;
+}
+
+.mermaid-viewer svg .node { cursor: pointer; }
+.mermaid-viewer svg.is-interacting .node { opacity: 0.24; }
+.mermaid-viewer svg.is-interacting .node.is-neighbor { opacity: 0.68; }
+
+.mermaid-viewer svg.is-interacting .node.is-active {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 68%, transparent));
+}
+
+.mermaid-viewer svg .node.is-active rect,
+.mermaid-viewer svg .node.is-active polygon,
+.mermaid-viewer svg .node.is-active path,
+.mermaid-viewer svg .node:focus-visible rect,
+.mermaid-viewer svg .node:focus-visible polygon,
+.mermaid-viewer svg .node:focus-visible path {
+  stroke: var(--accent) !important;
+  stroke-width: 4px !important;
+}
+
+.mermaid-viewer svg .node:focus-visible { outline: none; }
+.mermaid-viewer svg.is-interacting .flowchart-link { opacity: 0.1; }
+
+.mermaid-viewer svg.is-interacting .flowchart-link.is-active {
+  opacity: 1;
+  stroke: var(--accent) !important;
+  stroke-width: 4px !important;
+  stroke-dasharray: 12 8;
+  animation: mermaid-edge-flow 700ms linear infinite;
+}
+
+@keyframes mermaid-edge-flow {
+  to { stroke-dashoffset: -20; }
+}
+
+@media (max-width: 720px) {
+  .mermaid-viewer { min-height: 28rem; }
+  .mermaid-viewer__toolbar { flex-wrap: wrap; }
+  .mermaid-viewer__hint {
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+  }
+  .mermaid-viewer__viewport {
+    height: 65vh;
+    min-height: 28rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mermaid-viewer svg .node,
+  .mermaid-viewer svg .flowchart-link { transition: none; }
+  .mermaid-viewer svg.is-interacting .flowchart-link.is-active { animation: none; }
+}

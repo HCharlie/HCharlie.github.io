@@ -178,6 +178,29 @@ test("ML series explains how ML expands the familiar SDLC", async () => {
   assert.doesNotMatch(lifecycle, /class="[^\"]*\bmermaid\b[^\"]*"/);
 });
 
+test("roadmap enhances Mermaid without changing article diagrams", async () => {
+  const [roadmap, choosing, viewer, styles] = await Promise.all([
+    readFile(site("roadmap/index.html"), "utf8"),
+    readFile(site("patterns/choosing-delivery-patterns/index.html"), "utf8"),
+    readFile(site("assets/mermaid-viewer.js"), "utf8"),
+    readFile(site("assets/mermaid-viewer.css"), "utf8"),
+  ]);
+
+  assert.match(roadmap, /<pre class="mermaid interactive-mermaid">/);
+  assert.match(roadmap, /href="\/assets\/mermaid-viewer\.css"/);
+  assert.match(roadmap, /src="\/assets\/mermaid-viewer\.js"/);
+  assert.doesNotMatch(choosing, /mermaid-viewer\.(?:css|js)/);
+  assert.match(viewer, /@panzoom\/panzoom@4\.6\.0/);
+  assert.match(viewer, /\.flowchart-link/);
+  assert.match(viewer, /closest\("a"\)/);
+  assert.match(viewer, /xlink:href/);
+  assert.match(viewer, /prefers-reduced-motion: reduce/);
+  assert.match(viewer, /panzoom\.pan/);
+  assert.doesNotMatch(viewer, /style\.margin(?:Left|Top)/);
+  assert.match(styles, /\.mermaid-viewer__diagram\s*\{[\s\S]*?top: 0;[\s\S]*?left: 0;/);
+  assert.match(styles, /prefers-reduced-motion: reduce/);
+});
+
 test("generated site preserves routes, content, links, Mermaid, and exclusions", async () => {
   const [home, patterns, reliability, roadmap, asset] = await Promise.all([
     readFile(site("index.html"), "utf8"),
@@ -215,7 +238,7 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
 
   const mermaidUrl = "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
   assert.equal(`${home}${patterns}${reliability}`.includes(mermaidUrl), false);
-  assert.equal(roadmap.includes(mermaidUrl), true);
+  assert.equal(roadmap.includes(mermaidUrl) || roadmap.includes('/assets/mermaid-viewer.js'), true);
 
   await assert.rejects(access(site("patterns/choosing-reliability-patterns/SKILL/index.html")));
 });
