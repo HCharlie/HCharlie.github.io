@@ -23,6 +23,8 @@ flowchart TD
     WorkingPrinciples["Working Principles (Planned)"]
     Reliability["Reliability Patterns (Published)"]
     DeliveryPatterns["Delivery Patterns (Published)"]
+    DesignPatterns["Design Patterns (Next)"]
+    ArchitecturePatterns["Architecture Patterns (Later)"]
     SDLC["SDLC Overview (Published)"]
     ML["ML Project Lifecycle (Published)"]
     FeatureEngineering["Feature Engineering (Later)"]
@@ -48,6 +50,8 @@ flowchart TD
     Site --> WorkingPrinciples
     Patterns --> Reliability
     Patterns --> DeliveryPatterns
+    Patterns --> DesignPatterns
+    Patterns --> ArchitecturePatterns
     Lifecycle --> SDLC
     click SDLC "/sdlc/" "Read the SDLC overview"
     Lifecycle --> ML

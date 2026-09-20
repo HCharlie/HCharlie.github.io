@@ -9,7 +9,7 @@ Software patterns are compressed experience: names for recurring problems, their
 
 This series keeps them brief. Each entry is a practical refresher for engineers who need to recognize a pattern, understand when it helps, and remember what it can cost.
 
-I’m writing these patterns down so both humans and agents can reuse them, making projects easier to understand, more resilient, and easier to extend.
+I’m writing these patterns down so both humans and agents can reuse them, making projects easier to understand, more resilient, and easier to extend. The collection stays organized by the problem being solved rather than by a rigid taxonomy.
 
 ## Published
 
@@ -19,4 +19,7 @@ I’m writing these patterns down so both humans and agents can reuse them, maki
 
 ## Coming gradually
 
-Design patterns and other patterns that show up repeatedly in real systems.
+- **Design Patterns (next)** — language-agnostic ways to organize behavior, boundaries, composition, state, and dependencies inside an application.
+- **Architecture Patterns (later)** — consequential choices about application boundaries, data ownership, communication, deployment, and evolution.
+
+Both are families within this Commonly Used Patterns series. Other focused families can be added when real articles make them useful.

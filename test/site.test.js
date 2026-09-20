@@ -222,6 +222,9 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.match(home, /src="\/assets\/changli\.jpg"/);
   assert.match(patterns, /Software patterns are compressed experience/);
   assert.match(patterns, /href="\/patterns\/reliability\/"/);
+  assert.match(patterns, /Design Patterns/);
+  assert.match(patterns, /Architecture Patterns/);
+  assert.ok(patterns.indexOf("Design Patterns") < patterns.indexOf("Architecture Patterns"));
   assert.match(reliability, /Reliability patterns help systems contain failures/);
   assert.match(reliability, /href="\/patterns\/"/);
   assert.match(roadmap, /This is a living map of what I’m building for this site/);
@@ -234,6 +237,8 @@ test("generated site preserves routes, content, links, Mermaid, and exclusions",
   assert.doesNotMatch(roadmap, /ML Project Lifecycle \(Planned\)/);
   assert.doesNotMatch(roadmap, /SDLC Overview \(Next\)/);
   assert.match(roadmap, /Sizing Systems \(Planned\)/);
+  assert.match(roadmap, /Design Patterns \(Next\)/);
+  assert.match(roadmap, /Architecture Patterns \(Later\)/);
   assert.doesNotMatch(roadmap, /Feature Flags \(WIP\)/);
 
   const mermaidUrl = "https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.esm.min.mjs";
