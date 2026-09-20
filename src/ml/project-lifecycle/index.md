@@ -38,7 +38,9 @@ That one addition changes every phase of the lifecycle.
 
 ## Define
 
-**Define sets the contract: what problem the system solves and what must be true before learned behavior can be trusted.** It keeps the normal customer need and software constraints, then adds:
+**Define adds a contract around learned behavior: what role the model plays, where its capability comes from, what evidence makes it acceptable, and what the software does when it cannot be trusted.**
+
+The customer need, expected software behavior, and constraints remain part of Define. ML adds four decisions:
 
 ```diff
   customer need
@@ -55,7 +57,7 @@ The source of capability also needs to be credible. A team training a model need
 
 Finally, define what “good enough” means. Predictive systems may use error rates and performance across important groups. Generative systems may use representative tasks and rubrics for usefulness, groundedness, and safety. Both need a baseline, an acceptance threshold, and a safe fallback.
 
-Define ends with an agreement about the model's role and the evidence required to trust it—not a choice of technical implementation.
+Define ends when this contract is clear. Choosing and implementing the technical mechanism belongs to Develop.
 
 ## Develop
 
