@@ -157,6 +157,11 @@ test("ML series explains how ML expands the familiar SDLC", async () => {
     "viable source of learned capability",
     "evaluation cases and acceptance threshold",
     "fallback when the model cannot be trusted",
+    "Define sets the contract",
+    "Develop chooses the technical mechanism",
+    "Deliver takes an accepted candidate",
+    "Operate begins when the system meets real use",
+    "Retire ends the model’s use",
     "model artifact",
     "operationally healthy while its model",
   ]) {

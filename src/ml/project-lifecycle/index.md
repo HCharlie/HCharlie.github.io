@@ -7,26 +7,24 @@ permalink: /ml/project-lifecycle/
 
 [← Machine Learning](/ml/)
 
-As coding agents take on more of the mechanical work of navigating codebases and producing changes, I find the fundamentals becoming more important, not less. Agents can help us onboard quickly and spend less time typing code, but speed only helps when we understand the problem, the system, and the direction in which it should evolve.
+As coding agents take on more of the mechanical work of navigating codebases and producing changes, I find the fundamentals becoming more important, not less. Speed only helps when we understand the problem, the system, and the direction in which it should evolve.
 
-I have also spent more than eight years working in machine learning and have seen many models trained, evaluated, deployed, and replaced. I wanted to sit down and consolidate what I have learned: what actually changes when the Software Development Life Cycle is applied to an ML system?
+After more than eight years working in machine learning, I wanted to consolidate what I have learned from seeing models trained, evaluated, deployed, and replaced. What actually changes when the Software Development Life Cycle is applied to an ML system?
 
-My conclusion is that machine learning does not replace the familiar lifecycle. It expands what can change.
-
-The lifecycle is still:
+My conclusion is that machine learning does not replace the familiar lifecycle:
 
 ```text
 Define → Develop → Deliver → Operate → Retire
 ```
 
-The difference is the set of artifacts and evidence moving through it.
+It expands what moves through that lifecycle.
 
 ## Expand the unit of change
 
-An ML system is still a software system. What changes is that part of its behavior comes from a trained model. The application and model usually have separate build paths, produce separate artifacts, and must remain compatible when delivered together.
+An ML system is still a software system. Part of its behavior comes from a model learned from data, so the application and model may follow separate paths before they work together.
 
 - **Build software:** produce the application artifact from code and configuration.
-- **Train the model:** use code and data to produce the model artifact.
+- **Train the model:** use code and data to produce the model artifact—or select and adapt a pretrained model.
 - **Deliver them together:** run compatible application and model artifacts as one software system.
 
 The simplest way I think about the difference is:
@@ -40,7 +38,7 @@ That one addition changes every phase of the lifecycle.
 
 ## Define
 
-In conventional software, this phase defines the customer need, the behavior the software should provide, and its constraints. ML keeps all of that and adds a contract around the learned behavior:
+**Define sets the contract: what problem the system solves and what must be true before learned behavior can be trusted.** It keeps the normal customer need and software constraints, then adds:
 
 ```diff
   customer need
@@ -51,78 +49,74 @@ In conventional software, this phase defines the customer need, the behavior the
 + fallback when the model cannot be trusted
 ```
 
-First, bound the model's role. A vague goal such as “use ML for customer support” is not enough. A clearer definition might ask a model to propose a grounded response from a support request and account context, while a person or another rule remains responsible for the final action.
+A goal such as “use ML for customer support” is too broad. A bounded role might be: propose a grounded response from a support request and account context, while a person remains responsible for the final action.
 
-Next, establish a credible source of capability. If the team trains a model, that means finding suitable examples, labels, and representative data. If the team integrates a pretrained model, it means checking whether the model—combined with prompts, context, retrieval, or tools—can support the task.
+The source of capability also needs to be credible. A team training a model needs suitable examples, labels, and representative data. A team integrating a pretrained model needs evidence that the model, prompts, context, retrieval, or tools can support the task.
 
-Then define the evidence required for acceptance. Predictive systems may use error rates, calibration, and performance across important groups. Generative systems may use representative tasks and rubrics for usefulness, groundedness, and safety. Both need a baseline and a threshold for being good enough.
+Finally, define what “good enough” means. Predictive systems may use error rates and performance across important groups. Generative systems may use representative tasks and rubrics for usefulness, groundedness, and safety. Both need a baseline, an acceptance threshold, and a safe fallback.
 
-Finally, define what happens when the model is unavailable, uncertain, or produces an unacceptable result. The software might fall back to rules, ask for more information, request human review, or refuse safely.
-
-The output of Define is therefore more than a requirement. It is a clear agreement about the model's role, the evidence needed to trust it, and the behavior of the system when that trust is not justified.
+Define ends with an agreement about the model's role and the evidence required to trust it—not a choice of technical implementation.
 
 ## Develop
 
+**Develop chooses the technical mechanism and produces a candidate that can satisfy the contract.**
+
 ```diff
-  design, implementation, review, and testing
-+ data preparation
-+ training and experimentation
-+ model evaluation
+  technical implementation, integration, review, and testing
++ data or context preparation
++ model development or integration
++ empirical evaluation
 ```
 
-Development now changes more than application code. It may include correcting labels, defining features, building data pipelines, selecting a model, adjusting training configuration, running experiments, and comparing model candidates.
+For a trained model, this may include preparing data, building a training pipeline, running experiments, and comparing candidates. For a pretrained model, it may include selecting a model and developing prompts, retrieval, tools, or other context.
 
-Training resembles a build process because it turns inputs into an artifact. Unlike a normal compilation step, however, it is also an empirical search. The same code can produce different behavior when the data, initialization, parameters, or model architecture changes.
-
-A working result therefore includes the code and an evaluated model, along with enough information to reproduce and understand how that model was produced.
+The application–model interface is implemented here, and the complete behavior is evaluated against the cases defined earlier. Develop ends with a reproducible candidate and evidence—not with a production release.
 
 ## Deliver
 
+**Deliver takes an accepted candidate and makes it available through its intended environment or distribution channel.**
+
 ```diff
   application artifact and configuration
-+ model artifact
-+ preprocessing and post-processing
-+ model–code compatibility
++ model artifact or model dependency
++ data transformations and contracts
++ application–model compatibility
 ```
 
-Delivery has to bring the model and its surrounding software together. A service may need application code, a model artifact, input validation, feature transformations, output interpretation, and compatible runtime libraries. These pieces can change independently, but they must work as one deployed system.
+A team that owns the model may version and deploy it with the application. A team using a hosted model may instead pin a provider, model version, prompts, tools, and retrieval resources. In either case, delivery preserves the assumptions about inputs, outputs, and compatibility established during development.
 
-The interaction also carries data. An online request may contain features, text, an image, or another input for inference; a batch job may process a dataset instead. The delivery mechanism must preserve the assumptions made during development about schemas, transformations, and model inputs.
-
-Serving is one form of delivery, not the only one. Models may also run in batch pipelines, mobile applications, desktop software, or embedded devices.
+The destination may be an online service, batch pipeline, mobile application, desktop program, or embedded device. Deliver ends when the accepted version is safely available for use.
 
 ## Operate
 
+**Operate begins when the system meets real use.** Traditional service health remains necessary, but it is no longer sufficient.
+
 ```diff
   latency, errors, logs, metrics, and traces
-+ input data quality
-+ output and model quality
-+ drift and production feedback
++ input quality
++ model behavior and output quality
++ production feedback
 ```
 
-Classic operational signals still matter. We need to know whether the service is available, fast enough, free of unexpected errors, and using resources safely.
+An ML service can be operationally healthy while its model behaves poorly. Predictions may degrade for an important group, or generated responses may be irrelevant even though every request succeeds.
 
-But an ML service can be operationally healthy while its model behaves poorly. Inputs may no longer resemble the development data. Required fields may be present but semantically wrong. Predictions may degrade for an important segment, or generated responses may be irrelevant even though every request returns successfully.
-
-Operation therefore needs evidence about both the software and the learned behavior. Depending on the system, that may include schema checks, input and output distributions, delayed labels, quality measures, drift indicators, and feedback from users or downstream outcomes.
-
-Model behavior is statistical and data-dependent. Monitoring must reflect that rather than treating a successful response as proof of a correct result.
+Operation therefore observes both the software and the learned behavior. The useful evidence depends on the system: input checks, delayed labels, quality measures, drift, human feedback, or downstream outcomes. When evidence shows that the original contract is wrong or no longer met, the work returns to Define or Develop.
 
 ## Retire
+
+**Retire ends the model’s use and removes its dependencies without surprising consumers or losing required evidence.**
 
 ```diff
   application and infrastructure dependencies
 + model versions
-+ feature and data dependencies
-+ training and evaluation records
++ data, feature, prompt, or retrieval dependencies
++ retained evaluation records
 ```
 
-Retirement may involve more than stopping an application. A model version might still be used by a batch workflow, depend on a feature pipeline, or be required to reproduce a past decision. Data and evaluation records may also have retention, privacy, or audit requirements.
-
-A safe retirement identifies those relationships, moves consumers to an appropriate replacement, preserves required evidence, and removes model and infrastructure costs that no longer serve a purpose.
+A model may still serve a batch job, depend on a feature pipeline, or be needed to reproduce a past decision. Retirement moves consumers, preserves required records, and removes model and infrastructure costs that no longer serve a purpose.
 
 ## A wider iteration loop
 
-In a conventional software iteration, the most visible change is usually a code change. In ML, production evidence may lead to a code change, a data correction, a different evaluation method, new training configuration, or a newly trained model.
+The boundaries are simple: Define sets the contract, Develop proves a candidate, Deliver puts it into use, Operate learns from reality, and Retire removes it safely.
 
-The lifecycle remains recognizable, but the feedback loop has more dimensions. That is the main difference I want to keep in mind: ML does not ask us to discard the SDLC. It asks us to apply it to a larger unit of change—code, data, models, and the evidence connecting them.
+Production evidence may send the work backward. The next change might be code, data, evaluation, prompts, training configuration, or the model itself. The lifecycle stays familiar; the unit of change becomes wider.

@@ -83,11 +83,11 @@ Transition into the phase-by-phase comparison with: “That one addition changes
 
 Use the same five phase headings as the SDLC overview. In each phase, include a compact diff followed by a short explanation of what ML adds.
 
-- **Define:** preserve the customer need and software constraints, then add a bounded model role, a viable source of learned capability, evaluation cases and an acceptance threshold, and a fallback when the model cannot be trusted; distinguish trained models from integrated pretrained models and predictive criteria from generative rubrics
-- **Develop:** data preparation, training, experimentation, and model evaluation
-- **Deliver:** model artifacts, preprocessing and post-processing, and model–code compatibility
-- **Operate:** input quality, output and model quality, drift, and production feedback
-- **Retire:** model versions, feature and data dependencies, and training or evaluation records
+- **Define sets the contract:** preserve the customer need and software constraints, then add a bounded model role, a viable source of learned capability, evaluation cases and an acceptance threshold, and a fallback when the model cannot be trusted; distinguish trained models from integrated pretrained models and predictive criteria from generative rubrics
+- **Develop produces a candidate:** choose the technical mechanism, prepare data or context, develop or integrate the model, implement the application–model interface, and gather reproducible evaluation evidence
+- **Deliver puts an accepted candidate into use:** version the model artifact or external dependency with application code, transformations, prompts, tools, and compatibility contracts appropriate to the delivery channel
+- **Operate learns from production:** observe service health, input quality, model behavior, output quality, and feedback; send unmet or incorrect contracts back to Define or Develop
+- **Retire removes use safely:** migrate consumers, remove model and data, feature, prompt, or retrieval dependencies, and retain required evaluation records
 
 State that a service can be operationally healthy while its model behaves poorly. Describe model behavior as statistical and data-dependent rather than universally nondeterministic.
 
@@ -97,7 +97,7 @@ Explain briefly that production evidence may lead to changes in code, data, eval
 
 ### Conclusion
 
-Return to the central idea: the lifecycle is familiar, but the unit of change includes code, data, models, and the evidence connecting them.
+Return to the central idea: the lifecycle is familiar, its phase boundaries remain clear, and the unit of change includes code, data or context, models, prompts, and the evidence connecting them.
 
 ## Scope Boundaries
 
