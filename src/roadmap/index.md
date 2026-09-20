@@ -19,6 +19,7 @@ flowchart TD
     LinuxSystems["Linux Systems (Planned)"]
     HPC["High-Performance Computing (Planned)"]
     Languages["Programming Languages(Python, Rust, Go, C/C++)"]
+    WorkingPrinciples["Working Principles (Planned)"]
     Reliability["Reliability Patterns (Published)"]
     DeliveryPatterns["Delivery Patterns (Published)"]
     SDLC["SDLC Overview (Published)"]
@@ -43,6 +44,7 @@ flowchart TD
     SystemsHPC --> LinuxSystems
     SystemsHPC --> HPC
     Site --> Languages
+    Site --> WorkingPrinciples
     Patterns --> Reliability
     Patterns --> DeliveryPatterns
     Lifecycle --> SDLC
