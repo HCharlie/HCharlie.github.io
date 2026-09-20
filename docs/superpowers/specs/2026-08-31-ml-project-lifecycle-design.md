@@ -83,8 +83,8 @@ Transition into the phase-by-phase comparison with: “That one addition changes
 
 Use the same five phase headings as the SDLC overview. In each phase, include a compact diff followed by a short explanation of what ML adds.
 
-- **Define changes the mindset:** move from specifying behavior mainly through code to designing an empirical feedback loop around learned behavior; preserve the customer need and software constraints, then explain the model’s bounded role, where its capability comes from, what evidence makes it acceptable before and after delivery, and what the software does when it cannot be trusted; do not assume inevitable degradation, continuous retraining, or specialized infrastructure
-- **Develop produces a candidate:** choose the technical mechanism, prepare data or context, develop or integrate the model, implement the application–model interface, and gather reproducible evaluation evidence
+- **Define establishes the problem, expected behavior, and conditions for acceptance:** then explain that ML changes control from code alone to an empirical feedback loop; define the model’s bounded role, source of capability, evidence before and after delivery, acceptable errors, and fallback as a behavioral contract; do not assume inevitable degradation, continuous retraining, or specialized infrastructure
+- **Develop produces a candidate against the behavioral contract:** choose the technical mechanism, prepare data or context, develop or integrate the model, implement the application–model interface, and gather reproducible evaluation evidence
 - **Deliver puts an accepted candidate into use:** version the model artifact or external dependency with application code, transformations, prompts, tools, and compatibility contracts appropriate to the delivery channel
 - **Operate learns from production:** observe service health, input quality, model behavior, output quality, and feedback; send unmet or incorrect contracts back to Define or Develop
 - **Retire removes use safely:** migrate consumers, remove model and data, feature, prompt, or retrieval dependencies, and retain required evaluation records

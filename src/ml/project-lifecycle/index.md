@@ -38,9 +38,9 @@ That one addition changes every phase of the lifecycle.
 
 ## Define
 
-**Define changes the mindset: from specifying behavior mainly through code to designing an empirical feedback loop around learned behavior.**
+**Define establishes the problem, the behavior the system should provide, and the conditions under which that behavior is acceptable.**
 
-The customer need, expected software behavior, and constraints remain. What changes is that part of the behavior cannot be understood or controlled from code alone. It must be shaped by a model and judged through evidence.
+In conventional software, expected behavior is primarily expressed and controlled through code. In an ML system, part of that behavior comes from a model and cannot be understood from code alone. Define must therefore establish an empirical feedback loop for judging and controlling the learned behavior.
 
 ```diff
   customer need
@@ -55,11 +55,11 @@ Start by deciding which behavior belongs to the model and how the surrounding so
 
 Finally, define the evidence loop. Before delivery, representative cases and a baseline show whether the behavior is good enough. After delivery, production outcomes and feedback show whether it remains useful. That evidence may lead to a new model, different data or context, changed software, or no change at all; continuous retraining is not assumed.
 
-Define ends when the model's role, evidence, acceptable errors, and fallback are clear. Choosing and implementing the technical mechanism belongs to Develop.
+Together, these decisions form the behavioral contract. Define ends when the model's role, source of capability, acceptance evidence, acceptable errors, and fallback are clear. Develop then chooses the technical mechanism for satisfying that contract.
 
 ## Develop
 
-**Develop chooses the technical mechanism and produces a candidate that can satisfy the contract.**
+**Develop chooses the technical mechanism and produces a candidate that can satisfy the behavioral contract.**
 
 ```diff
   technical implementation, integration, review, and testing
@@ -100,7 +100,7 @@ The destination may be an online service, batch pipeline, mobile application, de
 
 An ML service can be operationally healthy while its model behaves poorly. Predictions may degrade for an important group, or generated responses may be irrelevant even though every request succeeds.
 
-Operation therefore observes both the software and the learned behavior. The useful evidence depends on the system: input checks, delayed labels, quality measures, drift, human feedback, or downstream outcomes. When evidence shows that the original contract is wrong or no longer met, the work returns to Define or Develop.
+Operation therefore observes both the software and the learned behavior. The useful evidence depends on the system: input checks, delayed labels, quality measures, drift, human feedback, or downstream outcomes. When evidence shows that the behavioral contract is wrong or no longer met, the work returns to Define or Develop.
 
 ## Retire
 
@@ -117,6 +117,6 @@ A model may still serve a batch job, depend on a feature pipeline, or be needed 
 
 ## A wider iteration loop
 
-The boundaries are simple: Define sets the contract, Develop proves a candidate, Deliver puts it into use, Operate learns from reality, and Retire removes it safely.
+The boundaries are simple: Define sets the behavioral contract, Develop proves a candidate against it, Deliver puts the accepted candidate into use, Operate checks the contract against reality, and Retire removes the model safely.
 
 Production evidence may send the work backward. The next change might be code, data, evaluation, prompts, training configuration, or the model itself. The lifecycle stays familiar; the unit of change becomes wider.
