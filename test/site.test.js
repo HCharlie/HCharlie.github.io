@@ -161,6 +161,7 @@ test("ML series explains how ML expands the familiar SDLC", async () => {
     "empirical feedback loop",
     "behavioral contract",
     "Develop chooses the technical mechanism",
+    "my favorite part",
     "Deliver takes an accepted candidate",
     "Operate begins when the system meets real use",
     "Retire ends the model’s use",

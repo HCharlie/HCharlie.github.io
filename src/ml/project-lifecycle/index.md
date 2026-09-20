@@ -68,7 +68,7 @@ Together, these decisions form the behavioral contract. Define ends when the mod
 + empirical evaluation
 ```
 
-For a trained model, this may include preparing data, building a training pipeline, running experiments, and comparing candidates. For a pretrained model, it may include selecting a model and developing prompts, retrieval, tools, or other context.
+For a trained model, this may include preparing data, building a training pipeline, running experiments (my favorite part), and comparing candidates. For a pretrained model, it may include selecting a model and developing prompts, retrieval, tools, or other context.
 
 The application–model interface is implemented here, and the complete behavior is evaluated against the cases defined earlier. Develop ends with a reproducible candidate and evidence—not with a production release.
 
