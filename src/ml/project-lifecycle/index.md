@@ -38,9 +38,9 @@ That one addition changes every phase of the lifecycle.
 
 ## Define
 
-**Define adds a contract around learned behavior: what role the model plays, where its capability comes from, what evidence makes it acceptable, and what the software does when it cannot be trusted.**
+**Define changes the mindset: from specifying behavior mainly through code to designing an empirical feedback loop around learned behavior.**
 
-The customer need, expected software behavior, and constraints remain part of Define. ML adds four decisions:
+The customer need, expected software behavior, and constraints remain. What changes is that part of the behavior cannot be understood or controlled from code alone. It must be shaped by a model and judged through evidence.
 
 ```diff
   customer need
@@ -51,13 +51,11 @@ The customer need, expected software behavior, and constraints remain part of De
 + fallback when the model cannot be trusted
 ```
 
-A goal such as “use ML for customer support” is too broad. A bounded role might be: propose a grounded response from a support request and account context, while a person remains responsible for the final action.
+Start by deciding which behavior belongs to the model and how the surrounding software will use its prediction or generation. Then establish where that capability comes from: representative data for a trained model, or suitable model capabilities, prompts, context, retrieval, or tools for a pretrained model.
 
-The source of capability also needs to be credible. A team training a model needs suitable examples, labels, and representative data. A team integrating a pretrained model needs evidence that the model, prompts, context, retrieval, or tools can support the task.
+Finally, define the evidence loop. Before delivery, representative cases and a baseline show whether the behavior is good enough. After delivery, production outcomes and feedback show whether it remains useful. That evidence may lead to a new model, different data or context, changed software, or no change at all; continuous retraining is not assumed.
 
-Finally, define what “good enough” means. Predictive systems may use error rates and performance across important groups. Generative systems may use representative tasks and rubrics for usefulness, groundedness, and safety. Both need a baseline, an acceptance threshold, and a safe fallback.
-
-Define ends when this contract is clear. Choosing and implementing the technical mechanism belongs to Develop.
+Define ends when the model's role, evidence, acceptable errors, and fallback are clear. Choosing and implementing the technical mechanism belongs to Develop.
 
 ## Develop
 

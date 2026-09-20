@@ -83,7 +83,7 @@ Transition into the phase-by-phase comparison with: “That one addition changes
 
 Use the same five phase headings as the SDLC overview. In each phase, include a compact diff followed by a short explanation of what ML adds.
 
-- **Define adds a contract around learned behavior:** preserve the customer need and software constraints, then explain what role the model plays, where its capability comes from, what evidence makes it acceptable, and what the software does when it cannot be trusted; distinguish trained models from integrated pretrained models and predictive criteria from generative rubrics
+- **Define changes the mindset:** move from specifying behavior mainly through code to designing an empirical feedback loop around learned behavior; preserve the customer need and software constraints, then explain the model’s bounded role, where its capability comes from, what evidence makes it acceptable before and after delivery, and what the software does when it cannot be trusted; do not assume inevitable degradation, continuous retraining, or specialized infrastructure
 - **Develop produces a candidate:** choose the technical mechanism, prepare data or context, develop or integrate the model, implement the application–model interface, and gather reproducible evaluation evidence
 - **Deliver puts an accepted candidate into use:** version the model artifact or external dependency with application code, transformations, prompts, tools, and compatibility contracts appropriate to the delivery channel
 - **Operate learns from production:** observe service health, input quality, model behavior, output quality, and feedback; send unmet or incorrect contracts back to Define or Develop
